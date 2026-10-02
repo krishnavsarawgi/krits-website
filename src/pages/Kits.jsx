@@ -293,7 +293,7 @@ export default function Kits() {
         {/* Impact */}
         <section id="impact" className="pt-24 scroll-mt-16">
           <SectionHeader number="06" title="Impact" />
-          <div className="blueprint grid sm:grid-cols-3 border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)]">
+          <div className="blueprint grid sm:grid-cols-3 border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)]">
             {[
               ['45', 'Children reached'],
               ['01', 'Partner NGO — Ek Prayas'],

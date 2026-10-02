@@ -71,7 +71,7 @@ export default function Quizzes() {
               </p>
             )}
           </div>
-          <div className="bg-[var(--card)] text-[var(--ink)] border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)] p-5">
+          <div className="paper bg-[var(--card)] text-[var(--ink)] border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)] p-5">
             <span className="tag">QUIZ OF THE DAY</span>
             <h2 className="font-stencil text-2xl uppercase mt-3 leading-tight">{daily.title}</h2>
             <p className="text-sm mt-1">{daily.desc}</p>
@@ -87,7 +87,7 @@ export default function Quizzes() {
               key={k}
               onClick={() => setCat(k)}
               className={`text-xs font-bold tracking-[.12em] uppercase px-3 py-1.5 border-2 border-[var(--ink)] ${
-                cat === k ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-[var(--card)] hover:bg-[var(--safety)]'
+                cat === k ? 'bg-[var(--ink)] text-[var(--paper)]' : 'paper bg-[var(--card)] hover:bg-[var(--safety)]'
               }`}
             >
               {label}

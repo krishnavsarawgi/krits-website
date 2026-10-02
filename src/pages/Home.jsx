@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       {/* Numbers */}
-      <section className="blueprint grid grid-cols-3 border-2 border-t-0 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)]">
+      <section className="blueprint grid grid-cols-3 border-2 border-t-0 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)]">
         {[
           [articles.length, 'Explainers'],
           [quizzes.length, 'Quizzes'],
@@ -86,7 +86,7 @@ export default function Home() {
       <section className="pt-24">
         <SectionHeader number="02" title="The quiz room" subtitle="Type answers against the clock. Every correct one fills in instantly." />
         <div className="grid lg:grid-cols-[1fr_2fr] gap-8">
-          <div className="blueprint border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)] p-6 flex flex-col">
+          <div className="blueprint border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)] p-6 flex flex-col">
             <span className="tag self-start">QUIZ OF THE DAY</span>
             <h3 className="font-stencil text-3xl uppercase mt-4 leading-tight">{daily.title}</h3>
             <p className="mt-2 opacity-90 flex-1">{daily.desc}</p>

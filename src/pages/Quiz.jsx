@@ -114,7 +114,7 @@ function Player({ quiz }) {
   return (
     <>
       {/* Control bar */}
-      <div className="sticky top-[58px] z-40 -mx-4 px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--ink)]">
+      <div className="sticky top-[58px] z-40 -mx-4 px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--rule)]">
         <div className="sheet p-3 md:p-4 flex flex-wrap items-center gap-3 md:gap-5">
           <label className="flex-1 min-w-[200px]">
             <span className="sr-only">Enter answer</span>
@@ -149,7 +149,7 @@ function Player({ quiz }) {
       </div>
 
       {status === 'done' && result && (
-        <div className="blueprint border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--ink)] p-6 md:p-8 mt-8 flex flex-wrap items-center justify-between gap-6">
+        <div className="blueprint border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)] p-6 md:p-8 mt-8 flex flex-wrap items-center justify-between gap-6">
           <div>
             <p className="text-xs font-bold tracking-[.2em] uppercase opacity-80">Final score</p>
             <p className="font-stencil text-5xl md:text-6xl mt-1">{result.score}/{n} <span className="text-3xl opacity-80">· {pct}%</span></p>
@@ -174,7 +174,7 @@ function Player({ quiz }) {
               const rows = quiz.items.map((it, i) => [it, i]).slice(col * half, (col + 1) * half);
               if (!rows.length) return null;
               return (
-                <table key={col} className="w-full border-2 border-[var(--ink)] bg-[var(--card)] mb-6 md:mb-0 self-start">
+                <table key={col} className="paper w-full border-2 border-[var(--ink)] bg-[var(--card)] mb-6 md:mb-0 self-start">
                   <thead>
                     <tr className="bg-[var(--ink)] text-[var(--paper)] text-xs tracking-[.15em] uppercase">
                       <th className="text-left px-3 py-2 w-1/2">{quiz.clueLabel}</th>
@@ -198,7 +198,7 @@ function Player({ quiz }) {
             {quiz.items.map((it, i) => (
               <div
                 key={i}
-                className={`flex items-center gap-3 border-2 border-[var(--ink)] bg-[var(--card)] px-3 py-3 min-h-[52px] ${flashIdx === i ? 'flash' : ''}`}
+                className={`paper flex items-center gap-3 border-2 border-[var(--ink)] bg-[var(--card)] px-3 py-3 min-h-[52px] ${flashIdx === i ? 'flash' : ''}`}
               >
                 <span className="text-xs text-[var(--ink-soft)] w-5 shrink-0">{i + 1}</span>
                 <span className={answerClass(i)}>{answerText(i, it)}</span>

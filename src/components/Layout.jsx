@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Mail, Menu, X } from 'lucide-react';
+import NetworkBackground from './NetworkBackground.jsx';
 
 export const EMAIL = 'krishnavsarawgi@gmail.com';
 export const PHONE = '+91 9874038350';
@@ -34,18 +35,19 @@ export default function Layout() {
   useEffect(() => setMenuOpen(false), [pathname]);
 
   const linkClass = ({ isActive }) =>
-    `hover:text-[var(--blueprint)] underline-offset-4 ${isActive ? 'underline decoration-2' : 'hover:underline'}`;
+    `hover:text-[var(--safety)] underline-offset-4 ${isActive ? 'underline decoration-2' : 'hover:underline'}`;
 
   return (
     <div className="min-h-screen flex flex-col">
       <ScrollManager />
-      <nav className="sticky top-0 z-50 bg-[var(--paper)] border-b-2 border-[var(--ink)]">
+      <NetworkBackground />
+      <nav className="sticky top-0 z-50 bg-[var(--paper)] border-b-2 border-[var(--rule)]">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="font-stencil text-2xl tracking-[.3em] text-[var(--ink)]">KRITS</Link>
           <div className="hidden md:flex gap-7 text-xs font-bold tracking-[.15em] uppercase">
             {NAV.map(([label, to]) =>
               to.includes('#') ? (
-                <Link key={to} to={to} className="hover:text-[var(--blueprint)] hover:underline underline-offset-4">
+                <Link key={to} to={to} className="hover:text-[var(--safety)] hover:underline underline-offset-4">
                   {label}
                 </Link>
               ) : (
@@ -87,7 +89,7 @@ export default function Layout() {
             <Link to="/explainers" className="hover:underline">Explainers</Link>
             <Link to="/quizzes" className="hover:underline">Quizzes</Link>
             <Link to="/kits" className="hover:underline">Kits</Link>
-            <a href={`mailto:${EMAIL}`} aria-label="Email" className="w-10 h-10 grid place-items-center border-2 border-[var(--ink)] bg-[var(--card)] hover:bg-[var(--safety)]">
+            <a href={`mailto:${EMAIL}`} aria-label="Email" className="paper w-10 h-10 grid place-items-center border-2 border-[var(--ink)] bg-[var(--card)] hover:bg-[var(--safety)]">
               <Mail className="w-4 h-4" />
             </a>
           </div>
