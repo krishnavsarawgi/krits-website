@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="KRITS builds and donates Meccano-style DIY STEM construction kits to NGOs and schools across India." />
-    <title>KRITS — DIY STEM Construction Kits for NGOs & Schools</title>
+    <meta name="description" content="KRITS explains science like a newspaper and tests it like a game: 100+ physics, chemistry and space explainers and 60+ type-in science quizzes." />
+    <title>KRITS — Science, Explained</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Saira+Stencil+One&family=Special+Elite&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400;1,600&family=Saira+Stencil+One&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Special+Elite&family=Grenze+Gotisch:wght@700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       :root {
@@ -36,6 +36,30 @@
       }
       .font-stencil { font-family: "Saira Stencil One", ui-sans-serif, system-ui; }
       .font-type { font-family: "Special Elite", "Courier Prime", monospace; }
+      .font-news { font-family: "Playfair Display", Georgia, serif; }
+      .font-serif-body { font-family: "Source Serif 4", Georgia, serif; }
+      .font-masthead { font-family: "Grenze Gotisch", "Playfair Display", serif; font-weight: 800; }
+
+      /* Newspaper pages sit on clean newsprint instead of graph paper. */
+      .newsprint {
+        background: oklch(97% .012 88);
+        color: oklch(20% .015 60);
+        border: 1px solid var(--ink);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+      .rule-double { border-top: 3px double var(--ink); }
+      .rule { border-top: 1px solid var(--ink); }
+      .kicker { font-family: "Courier Prime", monospace; font-weight: 700; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--stamp); }
+      .article-body p { margin: 0 0 1em; text-align: justify; hyphens: auto; line-height: 1.65; }
+      .article-body h2 { font-family: "Courier Prime", monospace; font-weight: 700; font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; margin: 1.6em 0 .6em; break-after: avoid; }
+      .article-body > p:first-of-type::first-letter {
+        font-family: "Playfair Display", serif; font-weight: 900;
+        float: left; font-size: 4.2em; line-height: .8; padding: .08em .1em 0 0;
+      }
+      @media (min-width: 768px) { .news-columns { column-count: 2; column-gap: 2.5rem; column-rule: 1px solid color-mix(in oklch, var(--ink) 25%, transparent); } }
+      .pull-quote { break-inside: avoid; }
+      @keyframes flash { from { background: var(--safety); } to { background: transparent; } }
+      .flash { animation: flash .9s ease-out; }
 
       .blueprint {
         background-color: var(--blueprint);

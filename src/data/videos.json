@@ -1,0 +1,647 @@
+{
+  "newtons-laws-of-motion": {
+    "id": "JGO_zDWmkvk",
+    "title": "Newton's 3 Laws, with a bicycle - Joshua Manley",
+    "channel": "TED-Ed"
+  },
+  "gravity": {
+    "id": "XRr1kaXKBsU",
+    "title": "What Everyone Gets Wrong About Gravity",
+    "channel": "Veritasium"
+  },
+  "conservation-of-energy": {
+    "id": "OTK9JrKC6EY",
+    "title": "Conservation of Energy: Free Fall, Springs, and Pendulums",
+    "channel": "Professor Dave Explains"
+  },
+  "momentum": {
+    "id": "hODlmGK7pl8",
+    "title": "Introduction to Impulse & Momentum - Physics",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "friction": {
+    "id": "fCe6UyNyPTg",
+    "title": "Friction - Physics 101 / AP Physics 1 Review with Dianna Cowern",
+    "channel": "Physics Girl"
+  },
+  "circular-motion": {
+    "id": "SQX22VVmRPs",
+    "title": "Physics - What Is a Centripetal Force?",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "angular-momentum": {
+    "id": "iWSu6U0Ujs8",
+    "title": "What IS Angular Momentum?",
+    "channel": "minutephysics"
+  },
+  "simple-harmonic-motion": {
+    "id": "1Q15fgz-lUk",
+    "title": "The Simple Pendulum",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "buoyancy": {
+    "id": "ijj58xD5fDI",
+    "title": "How taking a bath led to Archimedes' principle - Mark Salata",
+    "channel": "TED-Ed"
+  },
+  "bernoulli-and-flight": {
+    "id": "p4VHMsIuPmk",
+    "title": "How do airplanes actually fly? - Raymond Adkins",
+    "channel": "TED-Ed"
+  },
+  "pressure": {
+    "id": "kkq8ruV8_Jw",
+    "title": "Introduction to Pressure & Fluids - Physics Practice Problems",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "terminal-velocity": {
+    "id": "p0IZsfzDS4s",
+    "title": "Terminal Velocity",
+    "channel": "SciShow"
+  },
+  "work-and-power": {
+    "id": "3gcCKvKzAW0",
+    "title": "Work, Energy, & Power - Formulas and Equations - College Physics",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "coriolis-effect": {
+    "id": "mPsLanVS1Q8",
+    "title": "Coriolis Effect | National Geographic",
+    "channel": "National Geographic"
+  },
+  "chaos-theory": {
+    "id": "fDek6cYijxI",
+    "title": "Chaos: The Science of the Butterfly Effect",
+    "channel": "Veritasium"
+  },
+  "non-newtonian-fluids": {
+    "id": "Fnd-2jetT1w",
+    "title": "Oobleck and Non-Newtonian Fluids: Crash Course Kids #46.1",
+    "channel": "Crash Course Kids"
+  },
+  "hookes-law-elasticity": {
+    "id": "gZ_KnZHCn4M",
+    "title": "Simple Harmonic Motion: Hooke's Law",
+    "channel": "Professor Dave Explains"
+  },
+  "kinetic-theory": {
+    "id": "4m5JnJBq2AU",
+    "title": "What Is Brownian Motion? | Properties of Matter | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "special-relativity": {
+    "id": "-NN_m2yKAAk",
+    "title": "Length Contraction and Time Dilation | Special Relativity Ch. 5",
+    "channel": "minutephysics"
+  },
+  "general-relativity": {
+    "id": "AwhKZ3fd9JA",
+    "title": "General Relativity & Curved Spacetime Explained! | Space Time | PBS Digital Studios",
+    "channel": "PBS Space Time"
+  },
+  "wave-particle-duality": {
+    "id": "A9tKncAdlHQ",
+    "title": "Double Slit Experiment explained! by Jim Al-Khalili",
+    "channel": "The Royal Institution"
+  },
+  "photoelectric-effect": {
+    "id": "-LECEvusk8E",
+    "title": "Photoelectric Effect, Work Function, Threshold Frequency, Wavelength, Speed & Kinetic Energy, Electr",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "uncertainty-principle": {
+    "id": "TQKELOE9eY4",
+    "title": "What is the Heisenberg Uncertainty Principle? - Chad Orzel",
+    "channel": "TED-Ed"
+  },
+  "quantum-superposition": {
+    "id": "UjaAxUO6-Uw",
+    "title": "Schrödinger's cat: A thought experiment in quantum mechanics - Chad Orzel",
+    "channel": "TED-Ed"
+  },
+  "quantum-entanglement": {
+    "id": "ZuvK-od647c",
+    "title": "Quantum Entanglement & Spooky Action at a Distance",
+    "channel": "Veritasium"
+  },
+  "quantum-tunnelling": {
+    "id": "WPZLRtyvEqo",
+    "title": "What is Quantum Tunneling, Exactly?",
+    "channel": "Up and Atom"
+  },
+  "atomic-models": {
+    "id": "v48u8hjqNBU",
+    "title": "What Are The Different Atomic Models? Dalton, Rutherford, Bohr and Heisenberg Models Explained",
+    "channel": "Science ABC"
+  },
+  "radioactivity": {
+    "id": "opjJ-3Tkfyg",
+    "title": "Nuclear Half Life: Intro and Explanation",
+    "channel": "Tyler DeWitt"
+  },
+  "nuclear-fission": {
+    "id": "fES21E0qebw",
+    "title": "Nuclear Reactions, Radioactivity, Fission and Fusion",
+    "channel": "Professor Dave Explains"
+  },
+  "nuclear-fusion": {
+    "id": "BzK0ydOF0oU",
+    "title": "The Problem with Nuclear Fusion",
+    "channel": "Real Engineering"
+  },
+  "standard-model": {
+    "id": "XYcw8nV_GTs",
+    "title": "The Standard Model",
+    "channel": "Fermilab"
+  },
+  "higgs-boson": {
+    "id": "IElHgJG5Fe4",
+    "title": "The basics of the Higgs boson - Dave Barney and Steve Goldfarb",
+    "channel": "TED-Ed"
+  },
+  "antimatter": {
+    "id": "Y-W-w8yNiKU",
+    "title": "Why is there antimatter?",
+    "channel": "Veritasium"
+  },
+  "neutrinos": {
+    "id": "p118YbxFtGg",
+    "title": "The physics anomaly no one talks about: What's up with those neutrinos?",
+    "channel": "Sabine Hossenfelder"
+  },
+  "string-theory": {
+    "id": "Da-2h2B4faU",
+    "title": "String Theory Explained – What is The True Nature of Reality?",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "electromagnetic-spectrum": {
+    "id": "pj_ya0e20vE",
+    "title": "What is Light? Maxwell and the Electromagnetic Spectrum",
+    "channel": "Professor Dave Explains"
+  },
+  "speed-of-light": {
+    "id": "pTn6Ewhb27k",
+    "title": "Why No One Has Measured The Speed Of Light",
+    "channel": "Veritasium"
+  },
+  "refraction-and-rainbows": {
+    "id": "xkDhQGXqwCM",
+    "title": "How Rainbows Form",
+    "channel": "Physics Girl"
+  },
+  "why-the-sky-is-blue": {
+    "id": "4HBuHX4-VU8",
+    "title": "How Does Rayleigh Scattering ACTUALLY Work? (The Blue Sky)",
+    "channel": "The Science Asylum"
+  },
+  "doppler-effect": {
+    "id": "h4OnBYrbCjY",
+    "title": "The Doppler Effect: what does motion do to waves?",
+    "channel": "Alt Shift X"
+  },
+  "sound-waves": {
+    "id": "9u1PjsBfrmg",
+    "title": "Sound waves | Middle school physics | Khan Academy",
+    "channel": "Khan Academy"
+  },
+  "resonance": {
+    "id": "dihQuwrf9yQ",
+    "title": "A better description of resonance",
+    "channel": "Steve Mould"
+  },
+  "lasers": {
+    "id": "y3SBSbsdiYg",
+    "title": "How lasers work (in theory)",
+    "channel": "minutephysics"
+  },
+  "electric-current-ohms-law": {
+    "id": "08YugQce9OA",
+    "title": "Voltage Current and Resistance",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "magnetism": {
+    "id": "XKSjCOKDtpk",
+    "title": "Do we know how magnets work yet?",
+    "channel": "Veritasium"
+  },
+  "electromagnetic-induction": {
+    "id": "LDOa7UdfcMQ",
+    "title": "Faraday's Law of Electromagnetic Induction, Magnetic Flux & Induced EMF - Physics & Electromagnetism",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "maxwells-equations": {
+    "id": "rB83DpBJQsE",
+    "title": "Divergence and curl:  The language of Maxwell's equations, fluid flow, and more",
+    "channel": "3Blue1Brown"
+  },
+  "superconductivity": {
+    "id": "bD2M7P6dTVA",
+    "title": "The Map of Superconductivity",
+    "channel": "Domain of Science"
+  },
+  "semiconductors-and-transistors": {
+    "id": "IcrBqCFLHIY",
+    "title": "How Does a Transistor Work?",
+    "channel": "Veritasium"
+  },
+  "laws-of-thermodynamics": {
+    "id": "mGDJO2M7RBg",
+    "title": "What is the Second Law of Thermodynamics?",
+    "channel": "The Royal Institution"
+  },
+  "entropy": {
+    "id": "YM-uykVfq_E",
+    "title": "What is entropy? - Jeff Phillips",
+    "channel": "TED-Ed"
+  },
+  "absolute-zero": {
+    "id": "JHXxPnmyDbk",
+    "title": "Absolute Zero",
+    "channel": "Tyler DeWitt"
+  },
+  "heat-transfer": {
+    "id": "bRZwzy0xvhM",
+    "title": "Heat Transfer - Conduction, Convection, and Radiation",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "plasma": {
+    "id": "94tReSbyPYc",
+    "title": "What Is Plasma | Properties of Matter | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "periodic-table": {
+    "id": "fPnwBITSmgU",
+    "title": "The genius of Mendeleev's periodic table - Lou Serico",
+    "channel": "TED-Ed"
+  },
+  "electron-orbitals": {
+    "id": "Aoi4j8es4gQ",
+    "title": "Quantum Numbers, Atomic Orbitals, and Electron Configurations",
+    "channel": "Professor Dave Explains"
+  },
+  "ionic-bonding": {
+    "id": "Qf07-8Jhhpc",
+    "title": "Ionic Bonding Introduction",
+    "channel": "Tyler DeWitt"
+  },
+  "covalent-bonding": {
+    "id": "S_k0kr2eZSQ",
+    "title": "Introduction to Ionic Bonding and Covalent Bonding",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "metallic-bonding": {
+    "id": "ileXLAvDXIU",
+    "title": "Metallic Bonding and the Electron Sea Model, Electrical Conductivity - Basic Introduction",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "water-and-hydrogen-bonds": {
+    "id": "UukRgqzk-KE",
+    "title": "Why does ice float in water? - George Zaidan and Charles Morton",
+    "channel": "TED-Ed"
+  },
+  "the-mole": {
+    "id": "TEl4jeETVmg",
+    "title": "How big is a mole? (Not the animal, the other one.) - Daniel Dulek",
+    "channel": "TED-Ed"
+  },
+  "chemical-reactions-conservation-of-mass": {
+    "id": "2S6e11NBwiw",
+    "title": "The law of conservation of mass - Todd Ramsey",
+    "channel": "TED-Ed"
+  },
+  "acids-and-bases": {
+    "id": "ckbsHM2igT0",
+    "title": "What Is The pH Scale | Acids, Bases & Alkalis | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "redox-reactions": {
+    "id": "5rtJdjas-mY",
+    "title": "Introduction to Oxidation Reduction (Redox) Reactions",
+    "channel": "Tyler DeWitt"
+  },
+  "combustion": {
+    "id": "tMDKeBaLWDw",
+    "title": "What Is Fire?",
+    "channel": "Be Smart"
+  },
+  "catalysts": {
+    "id": "m_9bpZep1QM",
+    "title": "What Are Catalysts? | Reactions | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "reaction-rates": {
+    "id": "eSInI1xHvh4",
+    "title": "Collision Theory & Reactions Part 1 | Reactions | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "chemical-equilibrium": {
+    "id": "SMtbS5idkU4",
+    "title": "Haber Process and Le Chatelier's Principle of Chemical Equilibrium",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "exothermic-endothermic": {
+    "id": "eJXL0IrbtqE",
+    "title": "What Are Endothermic & Exothermic Reactions | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "gas-laws": {
+    "id": "BY9VGS2eXas",
+    "title": "The ABC's of gas: Avogadro, Boyle, Charles - Brian Bennett",
+    "channel": "TED-Ed"
+  },
+  "solutions-and-solubility": {
+    "id": "h5yIJXdItgo",
+    "title": "Why don't oil and water mix? - John Pollard",
+    "channel": "TED-Ed"
+  },
+  "batteries": {
+    "id": "9OVtk6G2TnQ",
+    "title": "How batteries work - Adam Jacobson",
+    "channel": "TED-Ed"
+  },
+  "electrolysis": {
+    "id": "dRtSjJCKkIo",
+    "title": "Electrolysis",
+    "channel": "Tyler DeWitt"
+  },
+  "isotopes": {
+    "id": "EboWeWmh5Pg",
+    "title": "What are Isotopes?",
+    "channel": "Tyler DeWitt"
+  },
+  "noble-gases": {
+    "id": "qNaBMvJXdJ4",
+    "title": "Noble Gases - The Gases In Group 18 | Properties of Matter | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "alkali-metals": {
+    "id": "CmiitvJiCPc",
+    "title": "Group 1 - The Alkali Metals | The Periodic Table | Properties of Matter | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "organic-chemistry-carbon": {
+    "id": "kAFC4RY1cKQ",
+    "title": "Why is All Life Carbon Based, Not Silicon? Three Startling Reasons!",
+    "channel": "Arvin Ash"
+  },
+  "polymers-and-plastics": {
+    "id": "UwRVj9rz2QQ",
+    "title": "From DNA to Silly Putty: The diverse world of polymers - Jan Mattingly",
+    "channel": "TED-Ed"
+  },
+  "chirality": {
+    "id": "71GjsRnsoL8",
+    "title": "What is chirality and how did it get in my molecules? - Michael Evans",
+    "channel": "TED-Ed"
+  },
+  "carbon-allotropes": {
+    "id": "BNAZO1FplaQ",
+    "title": "Allotropes of Carbon - Graphite, Diamond, Graphene, & Fullerenes",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "gibbs-free-energy": {
+    "id": "ViAmQivKif0",
+    "title": "Gibbs free energy and spontaneity | Chemistry | Khan Academy",
+    "channel": "Khan Academy"
+  },
+  "rust-and-corrosion": {
+    "id": "jQoE_9x37mQ",
+    "title": "Rust: Prevention & Treatment | Environmental Chemistry | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "flame-tests-fireworks": {
+    "id": "lfkjm2YRG-Q",
+    "title": "The Hidden Science of Fireworks",
+    "channel": "Veritasium"
+  },
+  "soap-and-surfactants": {
+    "id": "x7KKkElpyKQ",
+    "title": "Which is better: Soap or hand sanitizer? - Alex Rosenthal and Pall Thordarson",
+    "channel": "TED-Ed"
+  },
+  "haber-process": {
+    "id": "NWhZ77Qm5y4",
+    "title": "What Is The Haber Process | Reactions | Chemistry | FuseSchool",
+    "channel": "FuseSchool - Global Education"
+  },
+  "ozone-layer": {
+    "id": "5wVJeq4mLL0",
+    "title": "Whatever happened to the hole in the ozone layer? - Stephanie Honchell Smith",
+    "channel": "TED-Ed"
+  },
+  "crystals": {
+    "id": "PgSRAsgrKmg",
+    "title": "How do crystals work? - Graham Baird",
+    "channel": "TED-Ed"
+  },
+  "electronegativity-polarity": {
+    "id": "ds5HXmBkO0Y",
+    "title": "Bond Polarity, Electronegativity and Dipole Moment - Chemistry Practice Problems",
+    "channel": "The Organic Chemistry Tutor"
+  },
+  "black-holes": {
+    "id": "e-P5IFTqB98",
+    "title": "Black Holes Explained – From Birth to Death",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "big-bang": {
+    "id": "wNDGgL73ihY",
+    "title": "The Beginning of Everything -- The Big Bang",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "cosmic-microwave-background": {
+    "id": "3tCMd1ytvWg",
+    "title": "Cosmic Microwave Background Explained",
+    "channel": "PBS Space Time"
+  },
+  "dark-matter": {
+    "id": "QAa2O_8wBUQ",
+    "title": "What is Dark Matter and Dark Energy?",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "dark-energy": {
+    "id": "QAa2O_8wBUQ",
+    "title": "What is Dark Matter and Dark Energy?",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "life-cycle-of-stars": {
+    "id": "4xIQGbYur9Q",
+    "title": "The Life and Death of Stars: White Dwarfs, Supernovae, Neutron Stars, and Black Holes",
+    "channel": "Professor Dave Explains"
+  },
+  "supernovae": {
+    "id": "ljoeOLuX6Z4",
+    "title": "How One Supernova Measured The Universe",
+    "channel": "Veritasium"
+  },
+  "neutron-stars": {
+    "id": "udFxKZRyQt4",
+    "title": "Neutron Stars – The Most Extreme Things that are not Black Holes",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "gravitational-waves": {
+    "id": "iphcyNWFD10",
+    "title": "The Absurdity of Detecting Gravitational Waves",
+    "channel": "Veritasium"
+  },
+  "exoplanets": {
+    "id": "EUU0-ZpFoK4",
+    "title": "Exoplanets 101 | National Geographic",
+    "channel": "National Geographic"
+  },
+  "the-sun": {
+    "id": "Ux33-5k8cjg",
+    "title": "Where Does The Sun Get Its Energy?",
+    "channel": "Veritasium"
+  },
+  "moon-phases-and-eclipses": {
+    "id": "vIZyuXl-91U",
+    "title": "Why Aren't There Eclipses Every Month?",
+    "channel": "minutephysics"
+  },
+  "tides": {
+    "id": "mpRJhhbKLFc",
+    "title": "Why are there two tides a day? - Elise Cutts",
+    "channel": "TED-Ed"
+  },
+  "seasons": {
+    "id": "b3TRUDKpoAs",
+    "title": "What causes the seasons?",
+    "channel": "Veritasium"
+  },
+  "solar-system-planets": {
+    "id": "libKVRa01L8",
+    "title": "Solar System 101 | National Geographic",
+    "channel": "National Geographic"
+  },
+  "plate-tectonics": {
+    "id": "kwfNGatxUJI",
+    "title": "Plate Tectonics Explained",
+    "channel": "MinuteEarth"
+  },
+  "earthquakes": {
+    "id": "cavq2HFBa-U",
+    "title": "Understanding Earthquakes | National Geographic",
+    "channel": "National Geographic"
+  },
+  "volcanoes": {
+    "id": "VNGUdObDoLk",
+    "title": "Volcanoes 101 | National Geographic",
+    "channel": "National Geographic"
+  },
+  "rock-cycle": {
+    "id": "VByCLpj-I_s",
+    "title": "The Rock Cycle",
+    "channel": "Professor Dave Explains"
+  },
+  "water-cycle": {
+    "id": "jFjI6y46QRk",
+    "title": "The water cycle  | Ecology | Khan Academy",
+    "channel": "Khan Academy"
+  },
+  "greenhouse-effect": {
+    "id": "oqu5DjzOBF8",
+    "title": "I Misunderstood the Greenhouse Effect. Here's How It Works.",
+    "channel": "Sabine Hossenfelder"
+  },
+  "climate-change": {
+    "id": "G4H1N_yXBiA",
+    "title": "Causes and Effects of Climate Change | National Geographic",
+    "channel": "National Geographic"
+  },
+  "layers-of-the-earth": {
+    "id": "JGXi_9A__Vc",
+    "title": "Everything You Need to Know About Planet Earth",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "lightning": {
+    "id": "h-0gNl5f4BU",
+    "title": "The Science of Lightning | National Geographic",
+    "channel": "National Geographic"
+  },
+  "aurora": {
+    "id": "knwiWm4DpvQ",
+    "title": "What Causes The Northern Lights?",
+    "channel": "Veritasium"
+  },
+  "dna": {
+    "id": "q6PP-C4udkA",
+    "title": "What is DNA?",
+    "channel": "Bozeman Science"
+  },
+  "evolution-natural-selection": {
+    "id": "hOfRN0KihOU",
+    "title": "How Evolution works",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "cells": {
+    "id": "Hmwvj9X4GNY",
+    "title": "Parts of a cell",
+    "channel": "Khan Academy"
+  },
+  "photosynthesis": {
+    "id": "CMiPYHNNg28",
+    "title": "Photosynthesis (UPDATED)",
+    "channel": "Amoeba Sisters"
+  },
+  "cellular-respiration": {
+    "id": "eJ9Zjc-jdys",
+    "title": "Cellular Respiration (UPDATED)",
+    "channel": "Amoeba Sisters"
+  },
+  "genetics-inheritance": {
+    "id": "Mehz7tCxjSE",
+    "title": "How Mendel's pea plants helped us understand genetics - Hortensia Jiménez Díaz",
+    "channel": "TED-Ed"
+  },
+  "immune-system-vaccines": {
+    "id": "rb7TVW77ZCs",
+    "title": "How do vaccines work? - Kelwalin Dhanasarnsombut",
+    "channel": "TED-Ed"
+  },
+  "antibiotics": {
+    "id": "znnp-Ivj2ek",
+    "title": "What causes antibiotic resistance? - Kevin Wu",
+    "channel": "TED-Ed"
+  },
+  "neurons-and-the-brain": {
+    "id": "HUuUUJktL6E",
+    "title": "What Are Neurons and How Do They Work?",
+    "channel": "Science ABC"
+  },
+  "how-we-see-colour": {
+    "id": "l8_fZPHasdo",
+    "title": "How we see color - Colm Kelleher",
+    "channel": "TED-Ed"
+  },
+  "viruses-vs-bacteria": {
+    "id": "YXCWBu-Tuac",
+    "title": "Bacteria vs Viruses: The Difference and How to Fight them | Earth Science",
+    "channel": "BBC Earth Science"
+  },
+  "crispr": {
+    "id": "jAhjPd4uNFY",
+    "title": "Genetic Engineering Will Change Everything Forever – CRISPR",
+    "channel": "Kurzgesagt – In a Nutshell"
+  },
+  "the-heart-and-circulation": {
+    "id": "ruM4Xxhx32U",
+    "title": "How the heart actually pumps blood - Edmond Hui",
+    "channel": "TED-Ed"
+  },
+  "mass-energy-equivalence": {
+    "id": "hW7DW9NIO9M",
+    "title": "Einstein's Proof of E=mc²",
+    "channel": "minutephysics"
+  },
+  "maillard-reaction": {
+    "id": "rs1JLYXROVU",
+    "title": "Why the Maillard Reaction Makes Everything Delicious",
+    "channel": "Reactions"
+  },
+  "chromatography": {
+    "id": "TdJ57SQ6GAQ",
+    "title": "GCSE Chemistry - Paper Chromatography",
+    "channel": "Cognito"
+  }
+}

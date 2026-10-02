@@ -1,13 +1,21 @@
 {
-     "name": "krits-website",
-     "version": "1.0.0",
-     "dependencies": {
-       "react": "^18.2.0",
-       "react-dom": "^18.2.0",
-       "lucide-react": "latest"
-     },
-     "devDependencies": {
-       "@vitejs/plugin-react": "latest",
-       "vite": "latest"
-     }
-   }
+  "name": "krits-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest"
+  }
+}
