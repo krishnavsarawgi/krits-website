@@ -1,13 +1,98 @@
 <!doctype html>
-   <html lang="en">
-     <head>
-       <meta charset="UTF-8" />
-       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <script src="https://cdn.tailwindcss.com"></script>
-       <title>KRITS - Empowering STEM</title>
-     </head>
-     <body>
-       <div id="root"></div>
-       <script type="module" src="/src/main.jsx"></script>
-     </body>
-   </html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="KRITS builds and donates Meccano-style DIY STEM construction kits to NGOs and schools across India." />
+    <title>KRITS — DIY STEM Construction Kits for NGOs & Schools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Saira+Stencil+One&family=Special+Elite&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --paper: oklch(93% .03 85);
+        --card: oklch(96% .022 88);
+        --ink: oklch(24% .02 60);
+        --ink-soft: oklch(48% .03 62);
+        --rule: oklch(62% .04 65);
+        --blueprint: oklch(38% .1 245);
+        --blueprint-ink: oklch(95% .03 240);
+        --kraft: oklch(82% .06 78);
+        --safety: oklch(83% .16 88);
+        --rust: oklch(68% .17 48);
+        --stamp: oklch(53% .18 28);
+      }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: oklch(28% .03 60);
+        font-family: "Courier Prime", ui-monospace, monospace;
+        background-color: var(--paper);
+        background-image:
+          linear-gradient(color-mix(in oklch, var(--rule) 35%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in oklch, var(--rule) 35%, transparent) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      .font-stencil { font-family: "Saira Stencil One", ui-sans-serif, system-ui; }
+      .font-type { font-family: "Special Elite", "Courier Prime", monospace; }
+
+      .blueprint {
+        background-color: var(--blueprint);
+        color: var(--blueprint-ink);
+        background-image:
+          linear-gradient(rgba(255,255,255,.13) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.13) 1px, transparent 1px),
+          linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+        background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+      }
+      .sheet {
+        position: relative;
+        background: var(--card);
+        border: 2px solid var(--ink);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+      .sheet::before {
+        content: "";
+        position: absolute; top: 8px; left: 8px;
+        width: 8px; height: 8px; border-radius: 9999px;
+        border: 1.5px solid var(--ink);
+      }
+      .kraft { background: var(--kraft); }
+      .btn {
+        display: inline-flex; align-items: center; gap: .5rem;
+        padding: .9rem 1.4rem;
+        font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+        border: 2px solid var(--ink);
+        transition: transform .12s ease, box-shadow .12s ease;
+      }
+      .btn-safety { background: var(--safety); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+      .btn-safety:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+      .btn-ghost { color: var(--blueprint-ink); border-color: var(--blueprint-ink); }
+      .btn-ghost:hover { background: rgba(255,255,255,.1); }
+      .tag {
+        background: var(--safety); color: var(--ink);
+        border: 1.5px solid var(--ink);
+        font-size: .7rem; font-weight: 700; letter-spacing: .15em;
+        padding: .15rem .55rem;
+      }
+      .stamp {
+        display: inline-block;
+        color: var(--stamp); border: 2px solid var(--stamp);
+        font-weight: 700; font-size: .75rem; letter-spacing: .15em;
+        padding: .15rem .5rem; transform: rotate(-4deg);
+      }
+      .field {
+        width: 100%; background: transparent;
+        border: 0; border-bottom: 2px solid var(--ink);
+        padding: .5rem 0; outline: none; font: inherit;
+      }
+      .field:focus { border-color: var(--blueprint); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
