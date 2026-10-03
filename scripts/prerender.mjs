@@ -15,6 +15,7 @@ for (const f of articleFiles) {
   articles.push(...list);
 }
 const { default: quizzes } = await import('../src/data/quizzes/index.js');
+const { default: papers, JOURNAL } = await import('../src/data/research.js');
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const clip = (s, n = 160) => (s.length <= n ? s : `${s.slice(0, n - 1).replace(/\s+\S*$/, '')}…`);
@@ -40,6 +41,37 @@ const pages = [
     description: 'KRITS hand-assembles Meccano-style engineering kits and donates them to NGOs and schools so more children get to build something real.',
     priority: 0.7,
   },
+  {
+    path: '/research',
+    title: `${JOURNAL.name} — ${JOURNAL.tagline}`,
+    description: 'An open-access, editor-reviewed journal of original science by students. Free to submit, free to read. Submit your research.',
+    priority: 0.8,
+  },
+  {
+    path: '/research/submit',
+    title: `Submit a Paper — ${JOURNAL.name}`,
+    description: 'Author guidelines and submission form for KRITS Research: original research, reviews and short communications by students.',
+    priority: 0.6,
+  },
+  ...papers.map((p) => ({
+    path: `/research/${p.id}`,
+    title: `${p.title} — ${JOURNAL.name}`,
+    description: clip(p.abstract),
+    type: 'article',
+    priority: 0.8,
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'ScholarlyArticle',
+      headline: p.title,
+      abstract: p.abstract,
+      author: p.authors.map((a) => ({ '@type': 'Person', name: a.name, ...(a.affiliation && { affiliation: a.affiliation }) })),
+      datePublished: p.published,
+      keywords: (p.keywords || []).join(', '),
+      isPartOf: { '@type': 'Periodical', name: JOURNAL.name },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+      mainEntityOfPage: `${SITE}/research/${p.id}`,
+    },
+  })),
   ...articles.map((a) => {
     const video = videos[a.slug];
     return {

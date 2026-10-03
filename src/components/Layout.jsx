@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { BookOpen, Home, Mail, Puzzle, User, Wrench } from 'lucide-react';
+import { BookOpen, FlaskConical, Home, Mail, Puzzle, Wrench } from 'lucide-react';
 import NetworkBackground from './NetworkBackground.jsx';
 
 export const EMAIL = 'krishnavsarawgi@gmail.com';
@@ -9,6 +9,7 @@ export const PHONE = '+91 9874038350';
 const NAV = [
   ['Explainers', '/explainers'],
   ['Quizzes', '/quizzes'],
+  ['Research', '/research'],
   ['Kits', '/kits'],
   ['About', '/kits#founder'],
 ];
@@ -18,8 +19,8 @@ const TABS = [
   ['Home', '/', Home],
   ['Explainers', '/explainers', BookOpen],
   ['Quizzes', '/quizzes', Puzzle],
+  ['Research', '/research', FlaskConical],
   ['Kits', '/kits', Wrench],
-  ['About', '/kits#founder', User],
 ];
 
 function TabBar() {
@@ -28,7 +29,7 @@ function TabBar() {
     const [path, frag] = to.split('#');
     if (frag) return pathname === path && hash === `#${frag}`;
     if (path === '/') return pathname === '/';
-    return pathname.startsWith(path) && !(path === '/kits' && hash === '#founder');
+    return pathname.startsWith(path);
   };
   return (
     <nav className="tabbar md:hidden" aria-label="Sections">
@@ -103,7 +104,9 @@ export default function Layout() {
           <div className="flex flex-wrap items-center gap-5 text-xs font-bold tracking-[.15em] uppercase">
             <Link to="/explainers" className="hover:underline py-3">Explainers</Link>
             <Link to="/quizzes" className="hover:underline py-3">Quizzes</Link>
+            <Link to="/research" className="hover:underline py-3">Research</Link>
             <Link to="/kits" className="hover:underline py-3">Kits</Link>
+            <Link to="/kits#founder" className="hover:underline py-3">About</Link>
             <a href={`mailto:${EMAIL}`} aria-label="Email" className="paper w-11 h-11 grid place-items-center border-2 border-[var(--ink)] bg-[var(--card)] hover:bg-[var(--safety)]">
               <Mail className="w-4 h-4" />
             </a>
