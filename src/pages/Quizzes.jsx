@@ -12,7 +12,7 @@ const mins = (s) => (s < 60 ? `${s}s` : `${Math.round(s / 60)} min`);
 function QuizCard({ q, best }) {
   const pct = best ? Math.round((best.score / best.total) * 100) : null;
   return (
-    <Link to={`/quizzes/${q.slug}`} className="sheet group flex flex-col p-5 pt-7 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[8px_8px_0_var(--ink)] transition-all">
+    <Link to={`/quizzes/${q.slug}`} className="sheet press group flex flex-col p-5 pt-7 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[8px_8px_0_var(--ink)] transition-all">
       <div className="flex items-center justify-between gap-2 mb-2">
         <span className="text-[10px] font-bold tracking-[.2em] uppercase text-[var(--ink-soft)]">{QUIZ_CATEGORIES[q.cat]}</span>
         {pct !== null && (
@@ -48,7 +48,7 @@ export default function Quizzes() {
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-6 py-10 md:px-12 md:py-14 overflow-hidden">
+      <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-5 py-8 sm:px-6 sm:py-10 md:px-12 md:py-14 overflow-hidden">
         <Rivet className="top-3 left-3" />
         <Rivet className="top-3 right-3" />
         <Rivet className="bottom-3 left-3" />
@@ -80,13 +80,13 @@ export default function Quizzes() {
         </div>
       </section>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-12 mb-8">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-8 md:mt-12 mb-6 md:mb-8">
+        <div className="swipe-row flex md:flex-wrap gap-2 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0">
           {[['all', 'All'], ...Object.entries(QUIZ_CATEGORIES)].map(([k, label]) => (
             <button
               key={k}
               onClick={() => setCat(k)}
-              className={`text-xs font-bold tracking-[.12em] uppercase px-3 py-1.5 border-2 border-[var(--ink)] ${
+              className={`shrink-0 whitespace-nowrap text-xs font-bold tracking-[.12em] uppercase px-4 py-2.5 md:px-3 md:py-1.5 border-2 border-[var(--ink)] ${
                 cat === k ? 'bg-[var(--ink)] text-[var(--paper)]' : 'paper bg-[var(--card)] hover:bg-[var(--safety)]'
               }`}
             >
@@ -100,13 +100,13 @@ export default function Quizzes() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Find a quiz…"
-            className="bg-transparent outline-none py-1.5 w-full text-sm"
+            className="bg-transparent outline-none py-2.5 md:py-1.5 w-full text-sm"
           />
         </label>
       </div>
 
       {list.length ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {list.map((q) => (
             <QuizCard key={q.slug} q={q} best={best[q.slug]} />
           ))}

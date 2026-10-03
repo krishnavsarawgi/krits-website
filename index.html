@@ -2,13 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="KRITS explains science like a newspaper and tests it like a game: 100+ physics, chemistry and space explainers and 60+ type-in science quizzes." />
     <title>KRITS — Science, Explained</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#040b18" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="KRITS" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="google-site-verification" content="rGFtJr3KiFh6HCW3qzYnbtiMf9bNhOaiweuD21BPovM" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="KRITS" />
@@ -27,6 +33,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400;1,600&family=Saira+Stencil+One&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Special+Elite&family=Grenze+Gotisch:wght@700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Hover styles only on devices that can hover, so taps don't leave them stuck on.
+      tailwind.config = { future: { hoverOnlyWhenSupported: true } };
+    </script>
     <style>
       :root {
         /* Light "paper" surfaces: cards, newsprint, tags, buttons. */
@@ -62,7 +72,12 @@
         color: var(--ink);
         text-shadow: none;
       }
-      html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+      }
       body {
         margin: 0;
         color: var(--ink);
@@ -81,6 +96,44 @@
           linear-gradient(180deg, #071427 0%, var(--space) 100%);
       }
       .network-bg canvas { display: block; width: 100%; height: 100%; }
+
+      /* ---- Phone layout ---- */
+      .topbar { padding-top: env(safe-area-inset-top); }
+      .topbar > div { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+      .tabbar {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+        display: grid; grid-template-columns: repeat(5, 1fr);
+        padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        background: rgb(5 14 30 / .94);
+        border-top: 1px solid var(--rule);
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      }
+      .tabbar a {
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+        min-height: 58px;
+        font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+        color: var(--ink-soft);
+        text-shadow: none;
+      }
+      .tabbar a.active { color: var(--safety); }
+      .tabbar a:active { background: rgb(255 255 255 / .06); }
+      @media (max-width: 767px) {
+        /* Room for the tab bar so the footer isn't hidden behind it. */
+        .app-shell { padding-bottom: calc(58px + env(safe-area-inset-bottom)); }
+        /* Full-width, thumb-sized buttons in hero and call-to-action rows. */
+        .cta-row { flex-direction: column; align-items: stretch; }
+        .cta-row > .btn { justify-content: center; }
+        .btn { min-height: 48px; }
+        /* Justified text makes rivers in narrow columns. */
+        .article-body p { text-align: left; }
+        /* iOS zooms into any input under 16px. */
+        input, textarea, select { font-size: 16px !important; }
+      }
+      /* Sideways-swiping row of cards or chips on phones. */
+      .swipe-row { scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+      .swipe-row::-webkit-scrollbar { display: none; }
+      .press { transition: transform .12s ease; }
+      .press:active, .btn:active { transform: scale(.97); }
       .font-stencil { font-family: "Saira Stencil One", ui-sans-serif, system-ui; }
       .font-type { font-family: "Special Elite", "Courier Prime", monospace; }
       .font-news { font-family: "Playfair Display", Georgia, serif; }
@@ -137,9 +190,9 @@
       }
       .btn-safety, .tag { text-shadow: none; }
       .btn-safety { background: var(--safety); color: var(--paper-ink); border-color: var(--paper-ink); box-shadow: 4px 4px 0 var(--paper-ink); }
-      .btn-safety:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--paper-ink), 0 0 24px rgb(242 176 30 / .35); }
+      @media (hover: hover) { .btn-safety:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--paper-ink), 0 0 24px rgb(242 176 30 / .35); } }
       .btn-ghost { color: var(--blueprint-ink); border-color: var(--blueprint-ink); }
-      .btn-ghost:hover { background: rgba(255,255,255,.1); }
+      @media (hover: hover) { .btn-ghost:hover { background: rgba(255,255,255,.1); } }
       .tag {
         background: var(--safety); color: var(--paper-ink);
         border: 1.5px solid var(--paper-ink);

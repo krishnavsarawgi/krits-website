@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="max-w-6xl mx-auto px-4">
       {/* Hero */}
-      <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-6 py-14 md:px-14 md:py-20 overflow-hidden">
+      <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-5 py-10 sm:px-6 sm:py-14 md:px-14 md:py-20 overflow-hidden">
         <Rivet className="top-3 left-3" />
         <Rivet className="top-3 right-3" />
         <Rivet className="bottom-3 left-3" />
@@ -33,13 +33,13 @@ export default function Home() {
           <AtomBlueprint />
         </div>
         <div className="relative max-w-2xl">
-          <h1 className="inline-block font-stencil text-6xl md:text-8xl tracking-[.25em] border-2 border-current px-6 py-2 bg-white/5">KRITS</h1>
-          <p className="font-type text-2xl md:text-4xl mt-8 leading-tight">Science, explained.<br />Then tested.</p>
+          <h1 className="inline-block font-stencil text-5xl sm:text-6xl md:text-8xl tracking-[.2em] sm:tracking-[.25em] border-2 border-current px-4 sm:px-6 py-2 bg-white/5">KRITS</h1>
+          <p className="font-type text-2xl md:text-4xl mt-6 sm:mt-8 leading-tight">Science, explained.<br />Then tested.</p>
           <p className="max-w-xl mt-5 leading-relaxed opacity-90">
             {articles.length} short explainers on physics, chemistry, space, Earth and life, each paired with the best video on
             the topic, and {quizzes.length} type-the-answer quizzes to see what stuck.
           </p>
-          <div className="flex flex-wrap gap-4 mt-10">
+          <div className="cta-row flex flex-wrap gap-3 sm:gap-4 mt-8 sm:mt-10">
             <Link to="/explainers" className="btn btn-safety">Read the explainers</Link>
             <Link to="/quizzes" className="btn btn-ghost">Take a quiz</Link>
           </div>
@@ -61,7 +61,7 @@ export default function Home() {
       </section>
 
       {/* Today's paper */}
-      <section className="pt-24">
+      <section className="pt-16 md:pt-24">
         <SectionHeader number="01" title="Today’s front page" subtitle="A fresh lead story every day. Read the article, then watch the video." />
         <div className="newsprint px-4 md:px-8 py-6">
           <div className="flex flex-wrap items-end justify-between gap-2 border-b-[3px] border-double border-[var(--ink)] pb-2 mb-6">
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* Quizzes */}
-      <section className="pt-24">
+      <section className="pt-16 md:pt-24">
         <SectionHeader number="02" title="The quiz room" subtitle="Type answers against the clock. Every correct one fills in instantly." />
         <div className="grid lg:grid-cols-[1fr_2fr] gap-8">
           <div className="blueprint border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)] p-6 flex flex-col">
@@ -98,7 +98,7 @@ export default function Home() {
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {featuredQuizzes.map((q) => (
-              <Link key={q.slug} to={`/quizzes/${q.slug}`} className="sheet p-4 pt-6 group hover:bg-[var(--safety)] transition-colors">
+              <Link key={q.slug} to={`/quizzes/${q.slug}`} className="sheet press p-4 pt-6 group hover:bg-[var(--safety)] transition-colors">
                 <p className="text-[10px] font-bold tracking-[.2em] uppercase text-[var(--ink-soft)]">{QUIZ_CATEGORIES[q.cat]}</p>
                 <p className="font-stencil text-lg uppercase leading-tight mt-1">{q.title}</p>
                 <p className="text-xs mt-1">{q.items.length} answers · {Math.round(q.time / 60) || 1} min</p>
@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       {/* Kits */}
-      <section className="pt-24">
+      <section className="pt-16 md:pt-24">
         <SectionHeader number="03" title="Build it with your hands" subtitle="KRITS started as DIY engineering kits — and still makes them." />
         <div className="sheet p-6 md:p-10 grid md:grid-cols-[1fr_1.2fr] gap-10 items-center">
           <div className="blueprint border-2 border-[var(--ink)] aspect-[4/3] p-6">
@@ -125,7 +125,7 @@ export default function Home() {
               read about it.
             </p>
             <p>45 kits delivered so far to children at Ek Prayas, with a crane kit in design.</p>
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="cta-row flex flex-wrap gap-3 sm:gap-4 pt-2">
               <Link to="/kits" className="btn btn-safety">See the kits</Link>
               <Link to="/kits#founder" className="btn bg-[var(--card)] hover:bg-[var(--kraft)]">Meet the founder</Link>
             </div>

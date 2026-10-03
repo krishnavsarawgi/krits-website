@@ -114,7 +114,7 @@ function Player({ quiz }) {
   return (
     <>
       {/* Control bar */}
-      <div className="sticky top-[58px] z-40 -mx-4 px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--rule)]">
+      <div className="sticky top-[calc(58px+env(safe-area-inset-top))] z-40 -mx-4 px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--rule)]">
         <div className="sheet p-3 md:p-4 flex flex-wrap items-center gap-3 md:gap-5">
           <label className="flex-1 min-w-[200px]">
             <span className="sr-only">Enter answer</span>
@@ -128,6 +128,7 @@ function Player({ quiz }) {
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck={false}
+              enterKeyHint="go"
               placeholder={status === 'playing' ? 'Type an answer…' : status === 'done' ? 'Quiz over' : 'Press Start to begin'}
               className="w-full bg-white/70 border-2 border-[var(--ink)] px-3 py-2.5 text-lg outline-none focus:border-[var(--blueprint)] disabled:opacity-60"
             />
@@ -158,7 +159,7 @@ function Player({ quiz }) {
             {!result.isBest && result.prev && <p className="mt-2 text-sm opacity-80">Your best: {result.prev.score}/{n}</p>}
             {result.score < n && <p className="mt-2 text-sm opacity-90">Missed answers are shown in red below.</p>}
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="cta-row flex flex-wrap gap-3 w-full sm:w-auto">
             <button onClick={start} className="btn btn-safety"><RotateCcw className="w-4 h-4" /> Play again</button>
             <Link to={`/quizzes/${nextQuiz.slug}`} className="btn btn-ghost"><Shuffle className="w-4 h-4" /> Next quiz</Link>
           </div>
@@ -232,7 +233,7 @@ export default function Quiz() {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <header className="mt-8 md:mt-10 mb-6">
-        <Link to="/quizzes" className="text-xs font-bold tracking-[.15em] uppercase hover:underline">← All quizzes</Link>
+        <Link to="/quizzes" className="inline-block py-2 text-xs font-bold tracking-[.15em] uppercase hover:underline">← All quizzes</Link>
         <div className="flex items-center gap-3 mt-4">
           <span className="tag">{QUIZ_CATEGORIES[quiz.cat].toUpperCase()}</span>
           <span className="text-xs tracking-[.15em] uppercase text-[var(--ink-soft)]">

@@ -215,11 +215,16 @@ export default function NetworkBackground() {
     }
 
     // Only record the position; the next animation frame reads it.
+    // On phones this follows a finger while it is down.
     function onPointerMove(e) {
-      if (e.pointerType === 'touch') return;
+      if (e.pointerType === 'touch' && e.type === 'pointermove' && !mouse.active) return;
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerType === 'touch') mouse.active = false;
     }
 
     function onPointerOut(e) {
@@ -242,6 +247,9 @@ export default function NetworkBackground() {
     document.addEventListener('visibilitychange', onVisibility);
     if (!reduceMotion) {
       window.addEventListener('pointermove', onPointerMove, { passive: true });
+      window.addEventListener('pointerdown', onPointerMove, { passive: true });
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerUp);
       document.addEventListener('pointerout', onPointerOut);
       window.addEventListener('blur', onBlur);
     }
@@ -252,6 +260,9 @@ export default function NetworkBackground() {
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerdown', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
       document.removeEventListener('pointerout', onPointerOut);
       window.removeEventListener('blur', onBlur);
     };

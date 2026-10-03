@@ -82,7 +82,7 @@ function InvolvedForm() {
   };
 
   return (
-    <form onSubmit={submit} className="sheet p-6 md:p-10">
+    <form onSubmit={submit} className="sheet p-5 md:p-10">
       <div className="grid md:grid-cols-2 gap-8 mb-8">
         <label className="block">
           <span className="text-xs font-bold tracking-[.2em]">NAME</span>
@@ -98,12 +98,12 @@ function InvolvedForm() {
         <legend className="px-2 text-xs font-bold tracking-[.2em]">I WOULD LIKE TO</legend>
         <div className="grid sm:grid-cols-2 gap-3">
           {INTERESTS.map((item) => (
-            <label key={item} className="flex items-center gap-3 cursor-pointer">
+            <label key={item} className="flex items-center gap-3 cursor-pointer min-h-[44px]">
               <input
                 type="checkbox"
                 checked={picked.includes(item)}
                 onChange={() => toggle(item)}
-                className="w-4 h-4 accent-[var(--blueprint)]"
+                className="w-5 h-5 accent-[var(--blueprint)]"
               />
               {item}
             </label>
@@ -122,11 +122,11 @@ function InvolvedForm() {
       </label>
 
       <div className="flex flex-wrap items-center gap-6">
-        <button type="submit" className="btn btn-safety">File requisition</button>
-        <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 underline underline-offset-4">
+        <button type="submit" className="btn btn-safety w-full sm:w-auto justify-center">File requisition</button>
+        <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 underline underline-offset-4 py-2 break-all">
           <Mail className="w-4 h-4" /> {EMAIL}
         </a>
-        <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="flex items-center gap-2 underline underline-offset-4">
+        <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="flex items-center gap-2 underline underline-offset-4 py-2">
           <Phone className="w-4 h-4" /> {PHONE}
         </a>
       </div>
@@ -140,7 +140,7 @@ export default function Kits() {
     <div>
       <div className="max-w-6xl mx-auto px-4">
         {/* Hero */}
-        <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-6 py-14 md:px-14 md:py-20 overflow-hidden">
+        <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-5 py-10 sm:px-6 sm:py-14 md:px-14 md:py-20 overflow-hidden">
           <Rivet className="top-3 left-3" />
           <Rivet className="top-3 right-3" />
           <Rivet className="bottom-3 left-3" />
@@ -149,15 +149,15 @@ export default function Kits() {
             <CarBlueprint />
           </div>
           <div className="relative">
-            <h1 className="inline-block font-stencil text-6xl md:text-8xl tracking-[.25em] border-2 border-current px-6 py-2 bg-white/5">
+            <h1 className="inline-block font-stencil text-5xl sm:text-6xl md:text-8xl tracking-[.2em] sm:tracking-[.25em] border-2 border-current px-4 sm:px-6 py-2 bg-white/5">
               KRITS
             </h1>
-            <p className="font-type text-2xl md:text-3xl mt-8">Building STEM access, one kit at a time.</p>
+            <p className="font-type text-2xl md:text-3xl mt-6 sm:mt-8">Building STEM access, one kit at a time.</p>
             <p className="max-w-xl mt-4 leading-relaxed opacity-90">
               We source, assemble and donate Meccano-style DIY construction kits to NGOs and schools — so more
               children get to build something real with their own hands.
             </p>
-            <div className="flex flex-wrap gap-4 mt-10">
+            <div className="cta-row flex flex-wrap gap-3 sm:gap-4 mt-8 sm:mt-10">
               <a href="#involved" className="btn btn-safety">Get involved</a>
               <a href="#kits" className="btn btn-ghost">See the kits</a>
             </div>
@@ -165,7 +165,7 @@ export default function Kits() {
         </section>
 
         {/* About */}
-        <section id="about" className="pt-24 scroll-mt-16">
+        <section id="about" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader number="02" title="About KRITS" />
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="space-y-5 leading-relaxed">
@@ -194,10 +194,10 @@ export default function Kits() {
         </section>
 
         {/* Founder */}
-        <section id="founder" className="pt-24 scroll-mt-16">
+        <section id="founder" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader number="03" title="About the Founder" />
-          <div className="sheet p-6 md:p-10 grid md:grid-cols-[280px_1fr] gap-10">
-            <div className="kraft border-2 border-[var(--ink)] p-3 self-start rotate-[-1.5deg]">
+          <div className="sheet p-5 md:p-10 grid md:grid-cols-[280px_1fr] gap-8 md:gap-10">
+            <div className="kraft border-2 border-[var(--ink)] p-3 self-start rotate-[-1.5deg] max-w-[300px] w-full mx-auto md:mx-0">
               <img
                 src="/founder.webp"
                 alt="Krishnav Sarawgi speaking at a podium at The Doon School"
@@ -238,7 +238,7 @@ export default function Kits() {
         </section>
 
         {/* How it works */}
-        <section id="process" className="pt-24 scroll-mt-16">
+        <section id="process" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader number="04" title="How it works" subtitle="Assembly procedure — four steps, in order." />
           <div className="grid sm:grid-cols-2 gap-8">
             {STEPS.map(({ icon: Icon, title, text }, i) => (
@@ -259,7 +259,7 @@ export default function Kits() {
         </section>
 
         {/* Kits */}
-        <section id="kits" className="pt-24 scroll-mt-16">
+        <section id="kits" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader number="05" title="The Kits" subtitle="Catalogue of current and forthcoming builds." />
           <div className="grid md:grid-cols-2 gap-8">
             {KITS.map(({ no, status, name, text, specs, Drawing }) => (
@@ -291,7 +291,7 @@ export default function Kits() {
         </section>
 
         {/* Impact */}
-        <section id="impact" className="pt-24 scroll-mt-16">
+        <section id="impact" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader number="06" title="Impact" />
           <div className="blueprint grid sm:grid-cols-3 border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)]">
             {[
@@ -315,7 +315,7 @@ export default function Kits() {
         </section>
 
         {/* Get involved */}
-        <section id="involved" className="pt-24 scroll-mt-16">
+        <section id="involved" className="pt-16 md:pt-24 scroll-mt-20">
           <SectionHeader
             number="07"
             title="Get involved"

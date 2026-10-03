@@ -57,12 +57,12 @@ export default function Explainers() {
 
         {/* Section bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-3 border-b border-[var(--ink)]">
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-bold tracking-[.15em] uppercase">
+          <div className="swipe-row flex md:flex-wrap gap-x-5 gap-y-2 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 text-xs font-bold tracking-[.15em] uppercase">
             {[['all', 'Front page'], ...Object.entries(CATEGORIES).map(([k, v]) => [k, v.label])].map(([k, label]) => (
               <button
                 key={k}
                 onClick={() => setSection(k)}
-                className={`underline-offset-4 ${cat === k ? 'underline decoration-2 text-[var(--stamp)]' : 'hover:underline'}`}
+                className={`shrink-0 whitespace-nowrap py-2.5 md:py-0 underline-offset-4 ${cat === k ? 'underline decoration-2 text-[var(--stamp)]' : 'hover:underline'}`}
               >
                 {label}
                 {k !== 'all' && <span className="ml-1 font-normal text-[var(--ink-soft)]">{articles.filter((a) => a.cat === k).length}</span>}
@@ -75,7 +75,7 @@ export default function Explainers() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search 100+ explainers…"
-              className="bg-transparent outline-none py-1.5 w-full text-sm font-serif-body"
+              className="bg-transparent outline-none py-2.5 md:py-1.5 w-full text-sm font-serif-body"
             />
           </label>
         </div>
@@ -101,13 +101,16 @@ export default function Explainers() {
                 <section key={k} className="py-8 border-b border-[var(--ink)] last:border-0">
                   <div className="flex items-baseline justify-between gap-4 mb-6">
                     <h2 className="font-news font-black text-3xl md:text-4xl">{v.label}</h2>
-                    <button onClick={() => setSection(k)} className="text-xs font-bold tracking-[.15em] uppercase hover:underline">
+                    <button onClick={() => setSection(k)} className="shrink-0 py-2 text-xs font-bold tracking-[.15em] uppercase hover:underline">
                       All {list.length + (lead.cat === k ? 1 : 0)} →
                     </button>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+                  {/* Swipe sideways on phones, grid on wider screens. */}
+                  <div className="swipe-row flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-x-6 sm:gap-y-8 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 scroll-px-4">
                     {list.slice(0, 8).map((a) => (
-                      <ArticleCard key={a.slug} a={a} />
+                      <div key={a.slug} className="w-[78%] shrink-0 snap-start sm:w-auto">
+                        <ArticleCard a={a} />
+                      </div>
                     ))}
                   </div>
                 </section>
@@ -128,7 +131,7 @@ export default function Explainers() {
                         .sort((x, y) => x.title.localeCompare(y.title))
                         .map((a) => (
                           <li key={a.slug}>
-                            <Link to={`/explainers/${a.slug}`} className="hover:underline underline-offset-2">{a.title}</Link>
+                            <Link to={`/explainers/${a.slug}`} className="block py-1 md:py-0 hover:underline underline-offset-2">{a.title}</Link>
                           </li>
                         ))}
                     </ul>
