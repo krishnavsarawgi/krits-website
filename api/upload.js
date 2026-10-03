@@ -7,16 +7,26 @@ import { handleUpload } from '@vercel/blob/client';
 
 const MAX_BYTES = 20 * 1024 * 1024;
 
+// Vercel names the variable BLOB_READ_WRITE_TOKEN unless a custom prefix was
+// chosen when the store was connected, so accept any Blob read-write token.
+function blobToken() {
+  if (process.env.BLOB_READ_WRITE_TOKEN) return process.env.BLOB_READ_WRITE_TOKEN;
+  const found = Object.entries(process.env).find(([k, v]) => k.endsWith('_READ_WRITE_TOKEN') && v?.startsWith('vercel_blob_rw_'));
+  return found?.[1];
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const token = blobToken();
+  if (!token) {
     return res.status(503).json({ error: 'Uploads are not set up yet.' });
   }
   try {
     const result = await handleUpload({
+      token,
       body: req.body,
       request: req,
       onBeforeGenerateToken: async (pathname) => {
