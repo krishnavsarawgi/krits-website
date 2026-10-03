@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "2026-001",
+    "type": "research",
+    "subject": "physics",
+    "title": "How does temperature difference affect voltage generated in a thermoelectric setup?",
+    "authors": [
+      {
+        "name": "Krishnav Sarawgi",
+        "affiliation": "The Doon School"
+      }
+    ],
+    "abstract": "This experiment aims at showing how the temperature difference between two junctions of a thermoelectric setup - a hot one and a cold one affects the voltage generated.Two Vernier thermocouple probes were used to measure the temperature which could see on Loggerpro,while a multimeter measured the voltage generated in millivolts.The temperature was varied by changing the temperature of the hot and cold junctions.The results are supposed to show a linear relationship between ΔT and voltage, consistent with the equation V = S·ΔT, where S is the Seebeck coefficient of the thermocouple material.This experiments helps show a fundamental principle of thermoelectricity which can have direct applications in our life",
+    "keywords": [],
+    "published": "2026-10-03",
+    "pdf": "/research/2026-001.pdf"
+  }
+]
