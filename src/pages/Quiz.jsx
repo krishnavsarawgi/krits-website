@@ -4,12 +4,21 @@ import { Flag, Play, RotateCcw, Shuffle } from 'lucide-react';
 import quizzes, { quizBySlug, QUIZ_CATEGORIES, normalize } from '../data/quizzes/index.js';
 import { loadBest, saveBest } from '../data/scores.js';
 import useTitle from '../components/useTitle.js';
+import ShareButton from '../components/Share.jsx';
 
 const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 // When a typed answer is also the start of a longer answer ("Electron" vs
 // "Electron neutrino"), wait this long for more typing before accepting it.
 const PREFIX_WAIT_MS = 900;
+
+// Wordle-style result: a green square per answer found, black per miss.
+function shareText(quiz, found, secs) {
+  const squares = quiz.items.map((_, i) => (found.has(i) ? '🟩' : '⬛'));
+  const rows = [];
+  for (let i = 0; i < squares.length; i += 10) rows.push(squares.slice(i, i + 10).join(''));
+  return [`KRITS · ${quiz.title}`, `${found.size}/${quiz.items.length} ⚛️ in ${clock(secs)}`, ...rows, 'Can you beat it?'].join('\n');
+}
 
 function verdict(pct) {
   if (pct === 100) return 'Perfect score. Flawless.';
@@ -31,6 +40,8 @@ function Player({ quiz }) {
   const pending = useRef(null);
   const foundRef = useRef(found);
   foundRef.current = found;
+  const timeLeftRef = useRef(timeLeft);
+  timeLeftRef.current = timeLeft;
 
   const finish = useCallback(
     (finalFound) => {
@@ -40,9 +51,10 @@ function Player({ quiz }) {
       const score = finalFound.size;
       const prev = loadBest()[quiz.slug];
       const isBest = saveBest(quiz.slug, score, n);
-      setResult({ score, isBest: isBest && !!prev, prev });
+      const secs = Math.min(quiz.time, Math.max(0, quiz.time - timeLeftRef.current));
+      setResult({ score, isBest: isBest && !!prev, prev, text: shareText(quiz, finalFound, secs) });
     },
-    [quiz.slug, n],
+    [quiz, n],
   );
 
   // Countdown.
@@ -160,7 +172,8 @@ function Player({ quiz }) {
             {result.score < n && <p className="mt-2 text-sm opacity-90">Missed answers are shown in red below.</p>}
           </div>
           <div className="cta-row flex flex-wrap gap-3 w-full sm:w-auto">
-            <button onClick={start} className="btn btn-safety"><RotateCcw className="w-4 h-4" /> Play again</button>
+            <ShareButton title={`${quiz.title} — KRITS quiz`} text={result.text} path={`/quizzes/${quiz.slug}`} label="Share score" className="btn btn-safety" />
+            <button onClick={start} className="btn btn-ghost"><RotateCcw className="w-4 h-4" /> Play again</button>
             <Link to={`/quizzes/${nextQuiz.slug}`} className="btn btn-ghost"><Shuffle className="w-4 h-4" /> Next quiz</Link>
           </div>
         </div>

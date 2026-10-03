@@ -5,6 +5,7 @@ import articles, { bySlug, CATEGORIES } from '../data/articles/index.js';
 import { quizForArticle } from '../data/related.js';
 import { ArticleCard, VideoFigure, today } from '../components/News.jsx';
 import useTitle from '../components/useTitle.js';
+import ShareButton from '../components/Share.jsx';
 
 // Body text uses blank lines between paragraphs and "## " for subheads.
 function Body({ text, quote }) {
@@ -65,6 +66,12 @@ export default function Article() {
         <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-y border-[var(--ink)] py-2 mt-6 mb-8 text-xs tracking-[.12em] uppercase">
           <span>By the <strong>KRITS Science Desk</strong></span>
           <span className="flex items-center gap-1"><Timer className="w-3.5 h-3.5" /> {a.readMins} min read</span>
+          <ShareButton
+            title={a.title}
+            text={`${a.title} — ${a.dek}`}
+            path={`/explainers/${a.slug}`}
+            className="ml-auto flex items-center gap-1.5 py-2 font-bold tracking-[.12em] uppercase hover:underline"
+          />
         </div>
 
         <div className="grid lg:grid-cols-[1fr_280px] gap-10">
