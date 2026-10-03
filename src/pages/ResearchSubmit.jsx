@@ -417,8 +417,12 @@ export default function ResearchSubmit() {
       .catch(() => ({ configured: false, editor: false }))
       .then((s) => setSession({ checked: true, configured: s.configured, editor: s.editor }));
 
+  // Re-check when the tab comes back into focus, so a page left open while the
+  // desk was being set up doesn't keep showing an old answer.
   useEffect(() => {
     refresh();
+    window.addEventListener('focus', refresh);
+    return () => window.removeEventListener('focus', refresh);
   }, []);
 
   if (session.editor) {
