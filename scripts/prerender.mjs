@@ -18,7 +18,7 @@ const { default: quizzes } = await import('../src/data/quizzes/index.js');
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const clip = (s, n = 160) => (s.length <= n ? s : `${s.slice(0, n - 1).replace(/\s+\S*$/, '')}…`);
-const mins = (s) => (s < 60 ? `${s} seconds` : `${Math.round(s / 60)} minute${s >= 90 ? 's' : ''}`);
+const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 const pages = [
   { path: '/', priority: 1.0 },
@@ -64,7 +64,7 @@ const pages = [
   ...quizzes.map((q) => ({
     path: `/quizzes/${q.slug}`,
     title: `${q.title} Quiz — KRITS`,
-    description: clip(`${q.desc} ${q.items.length} answers, ${mins(q.time)}. Free science quiz — how many can you get?`),
+    description: clip(`${q.desc} ${q.items.length} answers, ${clock(q.time)} on the clock. Free science quiz — how many can you get?`),
     priority: 0.8,
   })),
 ];
