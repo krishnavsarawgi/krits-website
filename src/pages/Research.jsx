@@ -24,22 +24,33 @@ export function authorLine(p) {
   return p.authors.map((a) => a.name).join(', ');
 }
 
-function PaperRow({ p }) {
+function PaperRow({ p, lead }) {
   return (
     <article className="py-6 border-b border-[var(--rule)] last:border-0">
       <p className="kicker">
         {ARTICLE_TYPES[p.type]} · {SUBJECTS[p.subject]}
       </p>
-      <h3 className="font-news font-bold text-xl md:text-2xl leading-snug mt-1.5">
+      <h3 className={`font-news font-bold leading-snug mt-1.5 ${lead ? 'text-2xl md:text-4xl font-black leading-tight' : 'text-xl md:text-2xl'}`}>
         <Link to={`/research/${p.id}`} className="hover:underline underline-offset-4 decoration-1">{p.title}</Link>
       </h3>
-      <p className="font-serif-body mt-1.5">{authorLine(p)}</p>
-      <p className="font-serif-body text-[15px] text-[var(--ink-soft)] mt-2 leading-relaxed line-clamp-3">{p.abstract}</p>
-      <p className="mt-3 text-[11px] tracking-[.12em] uppercase text-[var(--ink-soft)] flex flex-wrap gap-x-4 gap-y-1">
-        <span>Published {formatDate(p.published)}</span>
-        <span>ID {p.id}</span>
-        {p.pdf && <span>PDF</span>}
+      <p className="font-serif-body mt-2">
+        {authorLine(p)}
+        {p.authors[0]?.affiliation && <span className="text-[var(--ink-soft)]"> · {p.authors[0].affiliation}</span>}
       </p>
+      <p className={`font-serif-body text-[var(--ink-soft)] mt-2 leading-relaxed ${lead ? 'text-base md:text-lg line-clamp-4' : 'text-[15px] line-clamp-3'}`}>{p.abstract}</p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <Link to={`/research/${p.id}`} className={lead ? 'btn btn-safety !py-2.5' : 'text-xs font-bold tracking-[.15em] uppercase underline underline-offset-4 py-2'}>
+          Read the paper →
+        </Link>
+        {p.pdf && (
+          <a href={p.pdf} target="_blank" rel="noreferrer" className="text-xs font-bold tracking-[.15em] uppercase underline underline-offset-4 py-2">
+            PDF
+          </a>
+        )}
+        <span className="text-[11px] tracking-[.12em] uppercase text-[var(--ink-soft)]">
+          {formatDate(p.published)} · ID {p.id}
+        </span>
+      </div>
     </article>
   );
 }
@@ -57,65 +68,26 @@ export default function Research() {
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      {/* Masthead */}
-      <section className="blueprint relative mt-6 md:mt-10 border-2 border-[var(--ink)] px-5 py-10 sm:px-6 sm:py-14 md:px-14 md:py-16 overflow-hidden">
-        <Rivet className="top-3 left-3" />
-        <Rivet className="top-3 right-3" />
-        <Rivet className="bottom-3 left-3" />
-        <Rivet className="bottom-3 right-3" />
-        <div className="relative grid lg:grid-cols-[1.5fr_1fr] gap-10 items-center">
-          <div>
-            <p className="text-[11px] font-bold tracking-[.25em] uppercase opacity-80">
-              Vol. {JOURNAL.volume} · {JOURNAL.year} · Open access
-            </p>
-            <h1 className="font-news font-black text-5xl md:text-7xl leading-[.95] mt-3">{JOURNAL.name}</h1>
-            <p className="font-news italic text-xl md:text-2xl mt-3 opacity-95">{JOURNAL.tagline}</p>
-            <p className="max-w-xl mt-5 leading-relaxed opacity-90">
-              Original experiments, observations and analyses by students. Every submission is read by the editor, and only
-              accepted papers are published here, each with a permanent link and a citation you can put on your CV.
-            </p>
-            <div className="cta-row flex flex-wrap gap-3 sm:gap-4 mt-8">
-              <Link to="/research/submit" className="btn btn-safety">Submit a paper</Link>
-              <Link to="/research/submit#guidelines" className="btn btn-ghost">Author guidelines</Link>
+      {/* Masthead and table of contents first, so readers land on the papers. */}
+      <section id="papers" className="newsprint mt-6 md:mt-10 px-4 md:px-10 py-6 md:py-8">
+        <header>
+          <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] md:text-xs tracking-[.15em] uppercase border-b border-[var(--ink)] pb-2">
+            <span>Vol. {JOURNAL.volume} · {JOURNAL.year}</span>
+            <span className="hidden sm:inline">Open access · Editor-reviewed</span>
+            <span>{papers.length} {papers.length === 1 ? 'paper' : 'papers'}</span>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 py-5 md:py-6">
+            <div>
+              <h1 className="font-news font-black text-4xl sm:text-5xl md:text-6xl leading-none">{JOURNAL.name}</h1>
+              <p className="font-news italic text-lg md:text-xl mt-2 text-[var(--ink-soft)]">{JOURNAL.tagline}</p>
             </div>
+            <Link to="/research/submit" className="btn btn-safety shrink-0 justify-center">Submit a paper</Link>
           </div>
-          <div className="paper bg-[var(--card)] border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)] p-5 md:p-6">
-            <div className="flex items-center justify-between gap-3">
-              <span className="tag">CALL FOR PAPERS</span>
-              <span className="flex items-center gap-1.5 text-xs font-bold tracking-[.15em] uppercase">
-                <span className="w-2 h-2 rounded-full bg-[oklch(62%_.17_150)] shadow-[0_0_0_3px_oklch(62%_.17_150/.25)]" /> Open
-              </span>
-            </div>
-            <h2 className="font-news font-bold text-2xl mt-4 leading-tight">Volume {JOURNAL.volume} ({JOURNAL.year})</h2>
-            <p className="font-serif-body text-[15px] mt-2 text-[var(--ink-soft)]">
-              Accepting original research, reviews and short communications in:
-            </p>
-            <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-sm font-serif-body">
-              {Object.values(SUBJECTS).map((s) => (
-                <li key={s} className="before:content-['▪'] before:mr-1.5 before:text-[var(--stamp)]">{s}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+          <div className="rule-double" />
+        </header>
 
-      {/* Why publish */}
-      <section className="blueprint grid grid-cols-2 md:grid-cols-4 border-2 border-t-0 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)]">
-        {PERKS.map(({ icon: Icon, title, text }, i) => (
-          <div key={title} className={`p-4 md:p-6 ${i % 2 ? 'border-l-2' : ''} ${i > 1 ? 'border-t-2 md:border-t-0' : ''} ${i === 2 ? 'md:border-l-2' : ''} border-white/15`}>
-            <Icon className="w-5 h-5 text-[var(--safety)]" />
-            <p className="font-bold text-sm tracking-[.12em] uppercase mt-2">{title}</p>
-            <p className="text-xs md:text-sm mt-1 opacity-85 leading-snug">{text}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Papers */}
-      <section className="pt-16 md:pt-24" id="papers">
-        <SectionHeader number="01" title="Published papers" subtitle="Newest first. Every paper here has been reviewed and accepted by the editor." />
-        <div className="newsprint px-4 md:px-10 py-6 md:py-8">
-          {papers.length > 0 && (
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-[3px] border-double border-[var(--ink)]">
+        {papers.length > 3 && (
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-3 border-b border-[var(--ink)]">
             <div className="swipe-row flex md:flex-wrap gap-x-5 gap-y-2 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 text-xs font-bold tracking-[.15em] uppercase">
               {[['all', 'All subjects'], ...Object.entries(SUBJECTS)].map(([k, label]) => (
                 <button
@@ -137,23 +109,75 @@ export default function Research() {
               />
             </label>
           </div>
-          )}
+        )}
 
-          {list.length ? (
-            list.map((p) => <PaperRow key={p.id} p={p} />)
-          ) : papers.length ? (
-            <p className="font-serif-body italic py-12 text-center">No papers match that search.</p>
-          ) : (
-            <div className="py-14 md:py-20 text-center max-w-lg mx-auto">
-              <p className="kicker">Volume {JOURNAL.volume} · In preparation</p>
-              <h3 className="font-news font-black text-3xl md:text-4xl mt-3 leading-tight">The first issue is being assembled.</h3>
-              <p className="font-serif-body text-[var(--ink-soft)] mt-4 leading-relaxed">
-                Papers will appear here as they are reviewed and accepted. Got an experiment, a data set or an idea you've
-                tested? Yours could be one of the first.
+        {list.length ? (
+          <div>
+            <p className="text-xs font-bold tracking-[.2em] uppercase pt-5">Latest papers</p>
+            {list.map((p, i) => <PaperRow key={p.id} p={p} lead={i === 0 && subject === 'all' && !query.trim()} />)}
+          </div>
+        ) : papers.length ? (
+          <p className="font-serif-body italic py-12 text-center">No papers match that search.</p>
+        ) : (
+          <div className="py-14 md:py-20 text-center max-w-lg mx-auto">
+            <p className="kicker">Volume {JOURNAL.volume} · In preparation</p>
+            <h3 className="font-news font-black text-3xl md:text-4xl mt-3 leading-tight">The first issue is being assembled.</h3>
+            <p className="font-serif-body text-[var(--ink-soft)] mt-4 leading-relaxed">
+              Papers will appear here as they are reviewed and accepted. Got an experiment, a data set or an idea you've
+              tested? Yours could be one of the first.
+            </p>
+            <Link to="/research/submit" className="btn btn-safety mt-8">Submit a paper</Link>
+          </div>
+        )}
+      </section>
+
+      {/* Call for papers */}
+      <section className="pt-16 md:pt-24">
+        <SectionHeader number="01" title="Publish with us" subtitle="Original experiments, observations and analyses by students." />
+        <div className="blueprint relative border-2 border-[var(--ink)] px-5 py-8 sm:px-6 md:px-12 md:py-12 overflow-hidden">
+          <Rivet className="top-3 left-3" />
+          <Rivet className="top-3 right-3" />
+          <Rivet className="bottom-3 left-3" />
+          <Rivet className="bottom-3 right-3" />
+          <div className="relative grid lg:grid-cols-[1.5fr_1fr] gap-10 items-center">
+            <div>
+              <p className="font-news italic text-2xl md:text-3xl leading-snug">Your experiment deserves a permanent, citable home.</p>
+              <p className="max-w-xl mt-4 leading-relaxed opacity-90">
+                Every submission is read by the editor, and only accepted papers are published here, each with a permanent
+                link and a citation you can put on your CV.
               </p>
-              <Link to="/research/submit" className="btn btn-safety mt-8">Submit a paper</Link>
+              <div className="cta-row flex flex-wrap gap-3 sm:gap-4 mt-8">
+                <Link to="/research/submit" className="btn btn-safety">Submit a paper</Link>
+                <Link to="/research/submit#guidelines" className="btn btn-ghost">Author guidelines</Link>
+              </div>
             </div>
-          )}
+            <div className="paper bg-[var(--card)] border-2 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)] p-5 md:p-6">
+              <div className="flex items-center justify-between gap-3">
+                <span className="tag">CALL FOR PAPERS</span>
+                <span className="flex items-center gap-1.5 text-xs font-bold tracking-[.15em] uppercase">
+                  <span className="w-2 h-2 rounded-full bg-[oklch(62%_.17_150)] shadow-[0_0_0_3px_oklch(62%_.17_150/.25)]" /> Open
+                </span>
+              </div>
+              <h2 className="font-news font-bold text-2xl mt-4 leading-tight">Volume {JOURNAL.volume} ({JOURNAL.year})</h2>
+              <p className="font-serif-body text-[15px] mt-2 text-[var(--ink-soft)]">
+                Accepting original research, reviews and short communications in:
+              </p>
+              <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-sm font-serif-body">
+                {Object.values(SUBJECTS).map((s) => (
+                  <li key={s} className="before:content-['▪'] before:mr-1.5 before:text-[var(--stamp)]">{s}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="blueprint grid grid-cols-2 md:grid-cols-4 border-2 border-t-0 border-[var(--ink)] shadow-[6px_6px_0_var(--shadow)]">
+          {PERKS.map(({ icon: Icon, title, text }, i) => (
+            <div key={title} className={`p-4 md:p-6 ${i % 2 ? 'border-l-2' : ''} ${i > 1 ? 'border-t-2 md:border-t-0' : ''} ${i === 2 ? 'md:border-l-2' : ''} border-white/15`}>
+              <Icon className="w-5 h-5 text-[var(--safety)]" />
+              <p className="font-bold text-sm tracking-[.12em] uppercase mt-2">{title}</p>
+              <p className="text-xs md:text-sm mt-1 opacity-85 leading-snug">{text}</p>
+            </div>
+          ))}
         </div>
       </section>
 
