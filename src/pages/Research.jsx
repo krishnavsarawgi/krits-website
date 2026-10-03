@@ -6,7 +6,7 @@ import { Rivet, SectionHeader } from '../components/Blueprint.jsx';
 import useTitle from '../components/useTitle.js';
 
 const STEPS = [
-  { icon: Send, title: 'Submit', text: 'Upload your paper as one PDF. It goes privately to the editor, never straight onto the site.' },
+  { icon: Send, title: 'Submit', text: 'Email your paper to the editor as one PDF. Only the editor can publish to the journal.' },
   { icon: FileSearch, title: 'Editorial check', text: 'The editor checks scope, originality and plagiarism, and that the methods are described clearly enough to repeat.' },
   { icon: MessageSquareText, title: 'Review', text: 'The paper is read closely, sometimes with help from a subject teacher or specialist. You get written comments.' },
   { icon: FilePen, title: 'Revise', text: 'You answer the comments and send a revised version. Most accepted papers go through at least one round.' },

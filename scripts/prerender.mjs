@@ -50,7 +50,7 @@ const pages = [
   {
     path: '/research/submit',
     title: `Submit a Paper — ${JOURNAL.name}`,
-    description: 'Upload your paper as one PDF. Author guidelines for KRITS Research: original research, reviews and short communications by students.',
+    description: 'Email your paper to the editor as one PDF. Author guidelines for KRITS Research: original research, reviews and short communications by students.',
     priority: 0.6,
   },
   ...papers.map((p) => ({

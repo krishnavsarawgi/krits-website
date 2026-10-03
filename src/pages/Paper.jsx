@@ -124,6 +124,19 @@ export default function Paper() {
               </div>
             )}
 
+            {p.pdf && (
+              <section className="mt-10">
+                <h2 className="text-xs font-bold tracking-[.2em] uppercase">Full paper</h2>
+                {/* Phones can't show PDFs inline reliably, so they get a button instead. */}
+                <object data={p.pdf} type="application/pdf" aria-label={`${p.title} (PDF)`} className="hidden md:block w-full h-[85vh] mt-3 border border-[var(--ink)] bg-white">
+                  <a href={p.pdf} className="underline">Open the PDF</a>
+                </object>
+                <a href={p.pdf} target="_blank" rel="noreferrer" className="md:hidden btn btn-safety w-full justify-center mt-3">
+                  <FileDown className="w-4 h-4" /> Read the full paper (PDF)
+                </a>
+              </section>
+            )}
+
             {p.references?.length > 0 && (
               <section className="mt-10 pt-6 border-t-[3px] border-double border-[var(--ink)]">
                 <h2 className="text-xs font-bold tracking-[.2em] uppercase">References</h2>
