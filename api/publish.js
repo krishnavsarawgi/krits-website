@@ -9,7 +9,7 @@ const isDate = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && 
 
 function validate(body) {
   const title = text(body.title, 300);
-  const abstract = text(body.abstract, 3000);
+  const abstract = text(body.abstract, 4000);
   const authors = (Array.isArray(body.authors) ? body.authors : [])
     .slice(0, 20)
     .map((a) => ({ name: text(a?.name, 120), affiliation: text(a?.affiliation, 200) }))
@@ -24,6 +24,7 @@ function validate(body) {
   if (!SUBJECTS[body.subject]) return 'Choose a subject.';
   if (!authors.length) return 'Add at least one author.';
   if (!abstract) return 'Add the abstract.';
+  if (String(body.abstract).length > 4000) return 'The abstract is too long. Keep it under about 600 words.';
   for (const k of ['received', 'accepted']) if (body[k] && !isDate(body[k])) return `The ${k} date isn’t valid.`;
   if (typeof body.pdf !== 'string' || !body.pdf) return 'Attach the PDF.';
   const pdf = Buffer.from(body.pdf, 'base64');

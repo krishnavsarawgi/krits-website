@@ -94,14 +94,15 @@ const toBase64 = (file) =>
     reader.readAsDataURL(file);
   });
 
-function Field({ label, hint, required, children }) {
+function Field({ label, hint, required, error, id, children }) {
   return (
-    <label className="block">
+    <label className="block scroll-mt-28" id={id}>
       <span className="text-xs font-bold tracking-[.2em] uppercase">
         {label}
         {required && <span className="text-[var(--stamp)]"> *</span>}
       </span>
       {children}
+      {error && <span role="alert" className="block mt-1.5 text-xs font-bold text-[var(--stamp)]">{error}</span>}
       {hint && <span className="block mt-1.5 text-xs text-[var(--ink-soft)] leading-snug">{hint}</span>}
     </label>
   );
@@ -189,12 +190,33 @@ function PublishForm({ onPublished, onSignedOut }) {
   const [authors, setAuthors] = useState([{ name: '', affiliation: '' }]);
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
+  const [problems, setProblems] = useState({});
   const [busy, setBusy] = useState(false);
-  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
-  const setAuthor = (i, k) => (e) => setAuthors((list) => list.map((a, j) => (j === i ? { ...a, [k]: e.target.value } : a)));
+  const fix = (k) => setProblems(({ [k]: _, ...rest }) => rest);
+  const set = (k) => (e) => {
+    fix(k);
+    setF((prev) => ({ ...prev, [k]: e.target.value }));
+  };
+  const setAuthor = (i, k) => (e) => {
+    fix('authors');
+    setAuthors((list) => list.map((a, j) => (j === i ? { ...a, [k]: e.target.value } : a)));
+  };
+
+  // Checked here rather than by the browser, whose hints are easy to miss.
+  const check = () => {
+    const p = {};
+    if (!file) p.pdf = 'Attach the paper’s PDF.';
+    if (!f.title.trim()) p.title = 'Add the title.';
+    if (!f.subject) p.subject = 'Choose a subject.';
+    if (!authors.some((a) => a.name.trim())) p.authors = 'Add at least one author’s name.';
+    if (!f.abstract.trim()) p.abstract = 'Add the abstract.';
+    else if (f.abstract.length > 4000) p.abstract = 'The abstract is too long. Keep it under about 600 words.';
+    return p;
+  };
 
   const choose = (picked) => {
     setError('');
+    fix('pdf');
     if (!picked) return;
     if (!(picked.type === 'application/pdf' || /\.pdf$/i.test(picked.name))) return setError('Choose a PDF file.');
     if (picked.size > MAX_PDF_MB * 1024 * 1024) return setError(`That PDF is ${sizeLabel(picked.size)}. The limit is ${MAX_PDF_MB} MB, so compress it first.`);
@@ -203,7 +225,14 @@ function PublishForm({ onPublished, onSignedOut }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!file) return setError('Attach the PDF.');
+    const found = check();
+    setProblems(found);
+    const keys = Object.keys(found);
+    if (keys.length) {
+      setError(`Can’t publish yet: ${keys.map((k) => found[k].replace(/\.$/, '').toLowerCase()).join('; ')}.`);
+      document.getElementById(`pf-${keys[0]}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     setBusy(true);
     setError('');
     try {
@@ -221,10 +250,10 @@ function PublishForm({ onPublished, onSignedOut }) {
   };
 
   return (
-    <form onSubmit={submit} className="sheet p-5 md:p-10 pt-8">
+    <form onSubmit={submit} noValidate className="sheet p-5 md:p-10 pt-8">
       <p className="kicker">Publish a paper</p>
 
-      <div className="mt-4">
+      <div className="mt-4 scroll-mt-28" id="pf-pdf">
         {file ? (
           <div className="flex items-center gap-4 border-2 border-[var(--ink)] bg-white/60 p-4">
             <FileText className="w-9 h-9 shrink-0 text-[var(--stamp)]" />
@@ -242,7 +271,7 @@ function PublishForm({ onPublished, onSignedOut }) {
             onClick={() => input.current?.click()}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => { e.preventDefault(); choose(e.dataTransfer.files[0]); }}
-            className="w-full border-2 border-dashed border-[var(--ink)] px-6 py-10 grid place-items-center text-center hover:bg-[var(--kraft)]"
+            className={`w-full border-2 border-dashed px-6 py-10 grid place-items-center text-center hover:bg-[var(--kraft)] ${problems.pdf ? 'border-[var(--stamp)]' : 'border-[var(--ink)]'}`}
           >
             <UploadCloud className="w-9 h-9" strokeWidth={1.5} />
             <span className="font-news font-bold text-xl mt-2">The paper’s PDF</span>
@@ -250,10 +279,11 @@ function PublishForm({ onPublished, onSignedOut }) {
           </button>
         )}
         <input ref={input} type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => { choose(e.target.files[0]); e.target.value = ''; }} />
+        {problems.pdf && <p role="alert" className="mt-1.5 text-xs font-bold text-[var(--stamp)]">{problems.pdf}</p>}
       </div>
 
       <div className="space-y-6 mt-8">
-        <Field label="Title" required>
+        <Field label="Title" required id="pf-title" error={problems.title}>
           <input className="field font-news text-lg" value={f.title} onChange={set('title')} required />
         </Field>
         <div className="grid md:grid-cols-2 gap-6">
@@ -262,7 +292,7 @@ function PublishForm({ onPublished, onSignedOut }) {
               {Object.entries(ARTICLE_TYPES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
           </Field>
-          <Field label="Subject" required>
+          <Field label="Subject" required id="pf-subject" error={problems.subject}>
             <select className="field" value={f.subject} onChange={set('subject')} required>
               <option value="" disabled>Choose…</option>
               {Object.entries(SUBJECTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
@@ -270,8 +300,9 @@ function PublishForm({ onPublished, onSignedOut }) {
           </Field>
         </div>
 
-        <fieldset>
+        <fieldset id="pf-authors" className="scroll-mt-28">
           <legend className="text-xs font-bold tracking-[.2em] uppercase">Authors <span className="text-[var(--stamp)]">*</span></legend>
+          {problems.authors && <p role="alert" className="mt-1.5 text-xs font-bold text-[var(--stamp)]">{problems.authors}</p>}
           <div className="space-y-4 mt-2">
             {authors.map((a, i) => (
               <div key={i} className="grid grid-cols-[1fr_auto] md:grid-cols-[1fr_1fr_auto] gap-x-4 gap-y-2 items-end">
@@ -290,7 +321,7 @@ function PublishForm({ onPublished, onSignedOut }) {
           </button>
         </fieldset>
 
-        <Field label="Abstract" required>
+        <Field label="Abstract" required id="pf-abstract" error={problems.abstract}>
           <textarea rows={6} className="mt-2 w-full kraft border-2 border-[var(--ink)] p-3 outline-none focus:border-[var(--blueprint)] font-serif-body leading-relaxed" value={f.abstract} onChange={set('abstract')} required />
           <span className={`block mt-1 text-xs text-right ${words(f.abstract) > ABSTRACT_MAX ? 'text-[var(--stamp)] font-bold' : 'text-[var(--ink-soft)]'}`}>
             {words(f.abstract)} / {ABSTRACT_MAX} words
