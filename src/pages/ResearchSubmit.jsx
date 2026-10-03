@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Copy, Lock, Mail } from 'lucide-react';
-import { JOURNAL, ARTICLE_TYPES, SUBJECTS } from '../data/research.js';
+import { upload } from '@vercel/blob/client';
+import { Check, FileText, Lock, UploadCloud, X } from 'lucide-react';
+import { JOURNAL, SUBJECTS } from '../data/research.js';
 import { EMAIL } from '../components/Layout.jsx';
 import useTitle from '../components/useTitle.js';
 
+const MAX_MB = 20;
 const ABSTRACT_MAX = 250;
 
-const DECLARATIONS = [
-  ['original', 'This is my own original work (and my co-authors’). Every source and idea from others is cited.'],
-  ['unpublished', 'It has not been published elsewhere and is not under review at another journal.'],
-  ['ai', 'Any use of AI tools in the research or writing is described in the manuscript.'],
-  ['licence', `If accepted, KRITS may publish it openly under ${JOURNAL.licence}, with me credited as author.`],
-  ['guardian', 'If I am under 18, a parent or guardian knows I am submitting this.'],
+// Everything the editor needs has to be inside the PDF.
+const CHECKLIST = [
+  'Title of the paper',
+  'Every author’s full name and school or institution',
+  'An email address the editor can reply to',
+  `Abstract (≤ ${ABSTRACT_MAX} words) and 3–6 keywords`,
+  'The full paper, with figures, tables and references',
+  'A line confirming it is your own original work, not published elsewhere, with any AI use described',
 ];
 
 const GUIDELINES = [
@@ -36,10 +40,10 @@ const GUIDELINES = [
   },
   {
     id: 'format',
-    title: 'Preparing the manuscript',
+    title: 'Preparing the PDF',
     body: [
-      'Send a Google Doc, Word file or PDF. Include a title page with every author’s full name, school or institution, and the corresponding author’s email.',
-      `Start with an abstract of no more than ${ABSTRACT_MAX} words and 3–6 keywords.`,
+      `Submit one PDF, up to ${MAX_MB} MB. It must contain everything: a title page, the abstract, the full paper and references.`,
+      'On the title page, give every author’s full name and school or institution, and an email address for the corresponding author.',
       'Number every figure and table, give each a caption, and refer to it in the text. Use SI units.',
       'Cite sources in the text and list them at the end in APA style. Wikipedia is not an acceptable final source.',
     ],
@@ -51,100 +55,163 @@ const GUIDELINES = [
       'Every submission is checked for plagiarism. Copied text, made-up data or images that aren’t yours lead to rejection.',
       'Research involving people (surveys, interviews, measurements) needs their informed consent, and a parent’s consent for anyone under 18. Do not include names or anything that identifies participants.',
       'No experiments that harm animals, and nothing dangerous. Describe the safety precautions you took.',
-      'Say clearly how any AI tools were used. AI cannot be listed as an author.',
+      'Say clearly how any AI tools were used. AI cannot be listed as an author. If you are under 18, a parent or guardian should know you are submitting.',
     ],
   },
   {
     id: 'review',
     title: 'Review and decisions',
     body: [
-      'Submissions go privately to the editor. Nothing is published automatically and nothing you send appears on the site unless it is accepted.',
-      'The editor reads every paper, sometimes with a subject teacher or specialist, and replies by email with one of: accept, revise, or decline, with reasons.',
-      'Accepted papers are published with an article ID, a permanent link and a citation. Authors keep the copyright.',
+      'Your PDF is stored privately and only the editor can open it. Nothing is published automatically and nothing you send appears on the site unless it is accepted.',
+      'The editor reads every paper, sometimes with a subject teacher or specialist, and replies to the email in your PDF with one of: accept, revise, or decline, with reasons.',
+      `Accepted papers are published open access under ${JOURNAL.licence}, with an article ID, a permanent link and a citation. Authors keep the copyright.`,
     ],
   },
 ];
 
-const blank = {
-  name: '',
-  email: '',
-  institution: '',
-  role: '',
-  coauthors: '',
-  title: '',
-  type: 'research',
-  subject: '',
-  abstract: '',
-  keywords: '',
-  link: '',
-  notes: '',
-};
+const sizeLabel = (b) => (b < 1024 * 1024 ? `${Math.max(1, Math.round(b / 1024))} KB` : `${(b / 1024 / 1024).toFixed(1)} MB`);
 
-const words = (s) => (s.trim() ? s.trim().split(/\s+/).length : 0);
+// "My Paper (final).pdf" -> "my-paper-final.pdf"
+const safeName = (name) =>
+  `${name.replace(/\.pdf$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80) || 'paper'}.pdf`;
 
-function Field({ label, hint, required, children }) {
+const isPdf = (file) => file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+
+function PdfUpload() {
+  const input = useRef(null);
+  const [file, setFile] = useState(null);
+  const [dragging, setDragging] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | uploading | done | error
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState('');
+  const [fallback, setFallback] = useState(false);
+
+  const choose = (f) => {
+    setError('');
+    setFallback(false);
+    if (!f) return;
+    if (!isPdf(f)) return setError('Please choose a PDF file.');
+    if (f.size > MAX_MB * 1024 * 1024) return setError(`That file is ${sizeLabel(f.size)}. The limit is ${MAX_MB} MB.`);
+    setFile(f);
+  };
+
+  const submit = async () => {
+    if (!file) return;
+    setStatus('uploading');
+    setProgress(0);
+    setError('');
+    try {
+      const stamp = new Date().toISOString().slice(0, 10);
+      await upload(`submissions/${stamp}-${safeName(file.name)}`, file, {
+        access: 'private',
+        contentType: 'application/pdf',
+        handleUploadUrl: '/api/upload',
+        onUploadProgress: ({ percentage }) => setProgress(Math.round(percentage)),
+      });
+      setStatus('done');
+    } catch (e) {
+      setStatus('error');
+      setFallback(true);
+      setError('The upload didn’t go through.');
+    }
+  };
+
+  if (status === 'done') {
+    return (
+      <div className="sheet p-6 md:p-10 pt-9">
+        <span className="stamp">RECEIVED</span>
+        <h2 className="font-news font-black text-3xl md:text-4xl mt-5">Thank you. Your paper is with the editor.</h2>
+        <p className="font-serif-body text-lg mt-3 leading-relaxed">
+          <strong>{file.name}</strong> was uploaded privately. The editor will reply to the email address in your PDF.
+        </p>
+        <button
+          type="button"
+          onClick={() => { setFile(null); setStatus('idle'); }}
+          className="btn bg-[var(--card)] mt-6"
+        >
+          Submit another paper
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <label className="block">
-      <span className="text-xs font-bold tracking-[.2em] uppercase">
-        {label}
-        {required && <span className="text-[var(--stamp)]"> *</span>}
-      </span>
-      {children}
-      {hint && <span className="block mt-1.5 text-xs text-[var(--ink-soft)] leading-snug">{hint}</span>}
-    </label>
+    <div className="sheet p-5 md:p-10 pt-8">
+      <p className="kicker">Your paper, as one PDF</p>
+
+      {file ? (
+        <div className="mt-4 flex items-center gap-4 border-2 border-[var(--ink)] bg-white/60 p-4">
+          <FileText className="w-9 h-9 shrink-0 text-[var(--stamp)]" />
+          <div className="min-w-0 flex-1">
+            <p className="font-bold truncate">{file.name}</p>
+            <p className="text-xs text-[var(--ink-soft)] mt-0.5">PDF · {sizeLabel(file.size)}</p>
+          </div>
+          {status !== 'uploading' && (
+            <button type="button" onClick={() => setFile(null)} aria-label="Remove file" className="w-11 h-11 grid place-items-center hover:bg-[var(--kraft)]">
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => input.current?.click()}
+          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => { e.preventDefault(); setDragging(false); choose(e.dataTransfer.files[0]); }}
+          className={`mt-4 w-full border-2 border-dashed px-6 py-12 md:py-16 grid place-items-center text-center transition-colors ${
+            dragging ? 'border-[var(--blueprint)] bg-[color-mix(in_oklch,var(--blueprint)_8%,transparent)]' : 'border-[var(--ink)] hover:bg-[var(--kraft)]'
+          }`}
+        >
+          <UploadCloud className="w-10 h-10" strokeWidth={1.5} />
+          <span className="font-news font-bold text-xl md:text-2xl mt-3">
+            <span className="hidden md:inline">Drop your PDF here, or </span>
+            <span className="underline underline-offset-4">choose a file</span>
+          </span>
+          <span className="text-xs tracking-[.12em] uppercase text-[var(--ink-soft)] mt-2">PDF only · up to {MAX_MB} MB</span>
+        </button>
+      )}
+      <input ref={input} type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => { choose(e.target.files[0]); e.target.value = ''; }} />
+
+      {status === 'uploading' && (
+        <div className="mt-4" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+          <div className="h-2 border border-[var(--ink)] bg-white/60">
+            <div className="h-full bg-[var(--safety)] transition-[width]" style={{ width: `${progress}%` }} />
+          </div>
+          <p className="text-xs mt-1.5 text-[var(--ink-soft)]">Uploading… {progress}%</p>
+        </div>
+      )}
+
+      {error && <p className="mt-4 text-sm font-bold text-[var(--stamp)]">{error}</p>}
+      {fallback && (
+        <div className="mt-3 border-2 border-dashed border-[var(--rule)] p-4 text-sm leading-relaxed">
+          You can still submit: email the PDF to{' '}
+          <a href={`mailto:${EMAIL}?subject=${encodeURIComponent(`${JOURNAL.name} submission`)}`} className="underline font-bold break-all">{EMAIL}</a>{' '}
+          with the subject “{JOURNAL.name} submission”.
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={submit}
+        disabled={!file || status === 'uploading'}
+        className="btn btn-safety w-full justify-center mt-6 disabled:opacity-50 disabled:pointer-events-none"
+      >
+        {status === 'uploading' ? 'Uploading…' : <><Check className="w-4 h-4" /> Submit paper</>}
+      </button>
+      <p className="mt-4 flex items-start gap-1.5 text-xs text-[var(--ink-soft)] leading-snug">
+        <Lock className="w-3.5 h-3.5 shrink-0 mt-px" />
+        <span>
+          Stored privately; only the editor can open it. By submitting you confirm the paper is your own original work and
+          follows the <a href="#guidelines" className="underline">author guidelines</a>.
+        </span>
+      </p>
+    </div>
   );
 }
 
 export default function ResearchSubmit() {
   useTitle('Submit Research');
-  const [f, setF] = useState(blank);
-  const [declared, setDeclared] = useState([]);
-  const [sent, setSent] = useState(null);
-  const [copied, setCopied] = useState(false);
-  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
-  const abstractWords = words(f.abstract);
-  const allDeclared = DECLARATIONS.every(([k]) => declared.includes(k));
-
-  const submit = (e) => {
-    e.preventDefault();
-    if (abstractWords > ABSTRACT_MAX || !allDeclared) return;
-    const subject = `${JOURNAL.name} submission: ${f.title}`;
-    const body = [
-      `${JOURNAL.name.toUpperCase()} — MANUSCRIPT SUBMISSION`,
-      '',
-      `Title: ${f.title}`,
-      `Article type: ${ARTICLE_TYPES[f.type]}`,
-      `Subject: ${SUBJECTS[f.subject]}`,
-      '',
-      `Corresponding author: ${f.name}`,
-      `Email: ${f.email}`,
-      `School / institution: ${f.institution}`,
-      `Position: ${f.role || '—'}`,
-      `Co-authors: ${f.coauthors.trim() || 'None'}`,
-      '',
-      `Abstract (${abstractWords} words):`,
-      f.abstract.trim(),
-      '',
-      `Keywords: ${f.keywords}`,
-      `Manuscript: ${f.link.trim() || 'Attached to this email'}`,
-      '',
-      'Declarations (all confirmed):',
-      ...DECLARATIONS.map(([, text]) => `[x] ${text}`),
-      ...(f.notes.trim() ? ['', 'Note to the editor:', f.notes.trim()] : []),
-    ].join('\n');
-    setSent({ subject, body });
-    setCopied(false);
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(`To: ${EMAIL}\nSubject: ${sent.subject}\n\n${sent.body}`);
-      setCopied(true);
-    } catch {
-      setCopied(false);
-    }
-  };
 
   return (
     <div className="max-w-6xl mx-auto px-4">
@@ -152,145 +219,25 @@ export default function ResearchSubmit() {
         <Link to="/research" className="inline-block py-2 text-xs font-bold tracking-[.15em] uppercase hover:underline">← {JOURNAL.name}</Link>
         <h1 className="font-news font-black text-4xl md:text-6xl leading-tight mt-2">Submit a paper</h1>
         <p className="max-w-2xl mt-3 text-lg leading-relaxed text-[var(--ink-soft)]">
-          Read the guidelines, fill in the form and send. Your submission goes privately to the editor by email. Nothing
-          appears on the site unless it is reviewed and accepted.
+          Upload one PDF with everything in it. It goes privately to the editor, and nothing appears on the site unless it is
+          reviewed and accepted.
         </p>
       </header>
 
       <div className="grid lg:grid-cols-[1.6fr_1fr] gap-8 mt-8 md:mt-10 items-start">
-        {sent ? (
-          <div className="sheet p-6 md:p-10 pt-9">
-            <span className="stamp">READY TO SEND</span>
-            <h2 className="font-news font-black text-3xl mt-5">Almost done — press send.</h2>
-            <p className="font-serif-body mt-3 leading-relaxed">
-              Your email app should have opened with the submission filled in, addressed to the editor.
-              {f.link.trim() ? ' ' : ' Attach your manuscript file, then '}
-              Send it from there. You’ll get a reply by email.
-            </p>
-            <p className="font-serif-body mt-3 leading-relaxed text-[var(--ink-soft)]">
-              Email app didn’t open? Copy the submission and email it to{' '}
-              <a href={`mailto:${EMAIL}`} className="underline font-bold text-[var(--ink)] break-all">{EMAIL}</a>.
-            </p>
-            <div className="cta-row flex flex-wrap gap-3 mt-6">
-              <button type="button" onClick={copy} className="btn btn-safety">
-                {copied ? <><Check className="w-4 h-4" /> Copied</> : <><Copy className="w-4 h-4" /> Copy submission</>}
-              </button>
-              <button type="button" onClick={() => setSent(null)} className="btn bg-[var(--card)]">Edit submission</button>
-            </div>
-            <pre className="mt-6 p-4 kraft border-2 border-[var(--ink)] text-xs whitespace-pre-wrap break-words max-h-80 overflow-auto">{sent.body}</pre>
-          </div>
-        ) : (
-          <form onSubmit={submit} className="sheet p-5 md:p-10 pt-8">
-            <fieldset>
-              <legend className="kicker mb-5">1 · Corresponding author</legend>
-              <div className="grid md:grid-cols-2 gap-6">
-                <Field label="Full name" required>
-                  <input className="field" value={f.name} onChange={set('name')} required autoComplete="name" />
-                </Field>
-                <Field label="Email" required hint="Decisions and comments are sent here.">
-                  <input type="email" className="field" value={f.email} onChange={set('email')} required autoComplete="email" />
-                </Field>
-                <Field label="School / institution" required>
-                  <input className="field" value={f.institution} onChange={set('institution')} required autoComplete="organization" />
-                </Field>
-                <Field label="Position" hint="e.g. Grade 11 student, undergraduate, teacher">
-                  <input className="field" value={f.role} onChange={set('role')} />
-                </Field>
-              </div>
-              <div className="mt-6">
-                <Field label="Co-authors" hint="One per line: full name — school. Leave blank if you worked alone.">
-                  <textarea rows={2} className="field resize-y" value={f.coauthors} onChange={set('coauthors')} />
-                </Field>
-              </div>
-            </fieldset>
-
-            <fieldset className="mt-10">
-              <legend className="kicker mb-5">2 · Manuscript</legend>
-              <div className="space-y-6">
-                <Field label="Title" required>
-                  <input className="field font-news text-lg" value={f.title} onChange={set('title')} required />
-                </Field>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <Field label="Article type" required>
-                    <select className="field" value={f.type} onChange={set('type')} required>
-                      {Object.entries(ARTICLE_TYPES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-                    </select>
-                  </Field>
-                  <Field label="Subject" required>
-                    <select className="field" value={f.subject} onChange={set('subject')} required>
-                      <option value="" disabled>Choose a subject…</option>
-                      {Object.entries(SUBJECTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-                    </select>
-                  </Field>
-                </div>
-                <Field label="Abstract" required>
-                  <textarea rows={7} className="mt-2 w-full kraft border-2 border-[var(--ink)] p-3 outline-none focus:border-[var(--blueprint)] font-serif-body leading-relaxed" value={f.abstract} onChange={set('abstract')} required />
-                  <span className={`block mt-1 text-xs text-right ${abstractWords > ABSTRACT_MAX ? 'text-[var(--stamp)] font-bold' : 'text-[var(--ink-soft)]'}`}>
-                    {abstractWords} / {ABSTRACT_MAX} words
-                  </span>
-                </Field>
-                <Field label="Keywords" required hint="3–6, separated by commas.">
-                  <input className="field" value={f.keywords} onChange={set('keywords')} required />
-                </Field>
-                <Field label="Link to manuscript" hint="A Google Docs / Drive or OneDrive link that anyone with the link can view. Or leave blank and attach the file to the email.">
-                  <input type="url" inputMode="url" className="field" value={f.link} onChange={set('link')} placeholder="https://" />
-                </Field>
-                <Field label="Note to the editor">
-                  <textarea rows={2} className="field resize-y" value={f.notes} onChange={set('notes')} />
-                </Field>
-              </div>
-            </fieldset>
-
-            <fieldset className="mt-10 border-2 border-dashed border-[var(--rule)] p-4 md:p-5">
-              <legend className="kicker px-2">3 · Declarations</legend>
-              <div className="space-y-2">
-                {DECLARATIONS.map(([k, text]) => (
-                  <label key={k} className="flex items-start gap-3 cursor-pointer py-1.5 text-[15px] leading-snug">
-                    <input
-                      type="checkbox"
-                      checked={declared.includes(k)}
-                      onChange={() => setDeclared((d) => (d.includes(k) ? d.filter((x) => x !== k) : [...d, k]))}
-                      className="w-5 h-5 mt-0.5 shrink-0 accent-[var(--blueprint)]"
-                      required
-                    />
-                    {text}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <button type="submit" disabled={abstractWords > ABSTRACT_MAX} className="btn btn-safety w-full sm:w-auto justify-center disabled:opacity-50">
-                <Mail className="w-4 h-4" /> Send to the editor
-              </button>
-              <p className="flex items-center gap-1.5 text-xs text-[var(--ink-soft)]">
-                <Lock className="w-3.5 h-3.5 shrink-0" /> Sent privately to the editor by email. Never posted publicly.
-              </p>
-            </div>
-          </form>
-        )}
+        <PdfUpload />
 
         <aside className="newsprint px-5 py-6 lg:sticky lg:top-24">
-          <p className="kicker">At a glance</p>
-          <dl className="mt-3 text-sm divide-y divide-[var(--rule)]">
-            {[
-              ['Fees', 'None'],
-              ['Access', `Open, ${JOURNAL.licence}`],
-              ['Abstract', `≤ ${ABSTRACT_MAX} words`],
-              ['Research', '≤ 5,000 words'],
-              ['Review', '≤ 4,000 words'],
-              ['Short comm.', '≤ 1,500 words'],
-              ['Format', 'Google Doc, Word or PDF'],
-              ['Citations', 'APA style'],
-              ['Decision', 'By email from the editor'],
-            ].map(([k, v]) => (
-              <div key={k} className="flex justify-between gap-4 py-2">
-                <dt className="text-[var(--ink-soft)] uppercase tracking-[.12em] text-[11px] pt-0.5">{k}</dt>
-                <dd className="font-bold text-right">{v}</dd>
-              </div>
+          <p className="kicker">Your PDF must include</p>
+          <ul className="mt-4 space-y-3 font-serif-body text-[15px] leading-snug">
+            {CHECKLIST.map((item) => (
+              <li key={item} className="flex gap-2.5">
+                <Check className="w-4 h-4 shrink-0 mt-0.5 text-[var(--stamp)]" />
+                {item}
+              </li>
             ))}
-          </dl>
-          <a href="#guidelines" className="block mt-4 text-xs font-bold tracking-[.15em] uppercase underline underline-offset-4 py-2">Full author guidelines ↓</a>
+          </ul>
+          <a href="#guidelines" className="block mt-5 text-xs font-bold tracking-[.15em] uppercase underline underline-offset-4 py-2">Full author guidelines ↓</a>
         </aside>
       </div>
 
